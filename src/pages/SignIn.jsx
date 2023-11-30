@@ -1,23 +1,25 @@
+import { NavLink } from "react-router-dom";
 import CircleUSerIcon from "../assets/svg/CircleUserIcon"
+
 
 const SignIn = () => {
 
   return (
     <>
       <nav className="main-nav">
-        <a className="main-nav-logo" href="./index.html">
+        <NavLink to='/' className="main-nav-logo">
           <img
             className="main-nav-logo-image"
             src="/src/assets/img/argentBankLogo.png"            
             alt="Argent Bank Logo"
           />
           <h1 className="sr-only">Argent Bank</h1>
-        </a>
+        </NavLink>
         <div>
-          <a className="main-nav-item" href="./sign-in.html">
+          <NavLink to= '/sign-in' className="main-nav-item">
             <CircleUSerIcon />
             Sign In
-          </a>
+          </NavLink>
         </div>
       </nav>
 

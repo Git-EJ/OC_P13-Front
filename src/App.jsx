@@ -1,15 +1,13 @@
-import SignIn from "./pages/SignIn"
-import User from "./pages/User"
-import Home from "./pages/home"
+import { RouterProvider } from "react-router-dom"
+import Router from "./router/Router"
+
 
 function App() {
 
   return (
-    <>
-      {/* <Home /> */}
-      {/* <SignIn /> */}
-      <User />
-    </>
+  <>
+    <RouterProvider router={ Router }/>
+  </>
   )
 }
 

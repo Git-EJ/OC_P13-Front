@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import ArrowRightFromBracketIcon from "../assets/svg/ArrowRightFromBracketIcon";
 import CircleUSerIcon from "../assets/svg/CircleUserIcon";
 
@@ -5,23 +6,23 @@ const User = () => {
   return (
     <>
       <nav className="main-nav">
-        <a className="main-nav-logo" href="./index.html">
+        <NavLink to='/' className="main-nav-logo" >
           <img
             className="main-nav-logo-image"
             src="/src/assets/img/argentBankLogo.png"            
             alt="Argent Bank Logo"
           />
           <h1 className="sr-only">Argent Bank</h1>
-        </a>
+        </NavLink>
         <div className="main-nav-item_container">
-          <a className="main-nav-item" href="./user.html">
+          <NavLink to='/user/:id' className="main-nav-item">
             <CircleUSerIcon />  
             Tony
-          </a>
-          <a className="main-nav-item" href="./index.html">
+          </NavLink>
+          <NavLink to='/' className="main-nav-item">
             <ArrowRightFromBracketIcon />
             Sign Out
-          </a>
+          </NavLink>
         </div>
       </nav>
 
