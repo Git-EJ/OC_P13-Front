@@ -1,25 +1,15 @@
-import { NavLink } from "react-router-dom"
-import CircleUSerIcon from "../assets/svg/CircleUserIcon"
+import Footer from "../atoms/Footer";
+import HomeFeatures from "../atoms/HomeFeatures";
+import NotConnectedButton from "../molecules/UserNotConnectedButton";
+import TopBar from "../organisms/TopBar";
+
 
 const Home = () => {
   return (
     <>
-      <nav className="main-nav">
-        <NavLink to='/' className="main-nav-logo">  
-          <img
-            className="main-nav-logo-image"
-            src="/src/assets/img/argentBankLogo.png"
-            alt="Argent Bank Logo"
-          />
-          <h1 className="sr-only">Argent Bank</h1>
-        </NavLink>
-        <div>
-          <NavLink to= '/sign-in' className="main-nav-item">
-          <CircleUSerIcon />
-            Sign In
-          </NavLink>
-        </div>
-      </nav>
+      <TopBar>
+        <NotConnectedButton />
+      </TopBar>
 
       <main>
         <div className="hero">
@@ -33,57 +23,12 @@ const Home = () => {
             </p>
           </section>
         </div>
-
-        <section className="features">
-          <h2 className="sr-only">Features</h2>
-
-          <div className="feature-item">
-            <img
-              src="/src/assets/img/icon-chat.png"
-              alt="Chat Icon"
-              className="feature-icon"
-            />
-            <h3 className="feature-item-title">You are our #1 priority</h3>
-            <p>
-              Need to talk to a representative? You can get in touch through our
-              24/7 chat or through a phone call in less than 5 minutes.
-            </p>
-          </div>
-
-          <div className="feature-item">
-            <img
-              src="/src/assets/img/icon-money.png"
-              alt="Money Icon"
-              className="feature-icon"
-            />
-            <h3 className="feature-item-title">
-              More savings means higher rates
-            </h3>
-            <p>
-              The more you save with us, the higher your interest rate will be!
-            </p>
-          </div>
-
-          <div className="feature-item">
-            <img
-              src="/src/assets/img/icon-security.png"
-              alt="Security Icon"
-              className="feature-icon"
-            />
-            <h3 className="feature-item-title">Security you can trust</h3>
-            <p>
-              We use top of the line encryption to make sure your data and money
-              is always safe.
-            </p>
-          </div>
-        </section>
+        <HomeFeatures />
       </main>
 
-      <footer className="footer">
-        <p className="footer-text">Copyright 2020 Argent Bank</p>
-      </footer>
+      <Footer />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
