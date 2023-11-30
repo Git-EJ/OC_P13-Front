@@ -5,7 +5,7 @@ import CircleUSerIcon from "../assets/svg/CircleUserIcon";
 const NotConnectedButton = () => {
   return (
     <>
-      <NavLink to="/sign-in" className="main-nav-item">
+      <NavLink to="/sign-in" className="main-nav-item_contents">
         <CircleUSerIcon />
         Sign In
       </NavLink>

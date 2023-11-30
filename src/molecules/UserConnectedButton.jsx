@@ -10,11 +10,11 @@ const UserConnectedButton = () => {
 
   return (
     <div className="main-nav-item_container">
-      <NavLink to="/user/:id" className="main-nav-item">
+      <NavLink to="/user/:id" className="main-nav-item_contents">
         <CircleUSerIcon />
         {firstName}
       </NavLink>
-      <NavLink to="/" className="main-nav-item">
+      <NavLink to="/" className="main-nav-item_contents">
         <ArrowRightFromBracketIcon />
         Sign Out
       </NavLink>

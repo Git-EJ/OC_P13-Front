@@ -1,0 +1,46 @@
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+
+  & a {
+    text-decoration: none;
+    font-weight: bold;
+    color: $font-primary-color;
+  }
+
+  & a.router-link-exact-active {
+    color: #42b983;
+  }
+
+  &-item {
+    &_container {
+      @include flex_center_row;
+    }
+
+    &_contents {
+      @include flex_center;
+      text-decoration: none;
+      margin-right: 0.5rem;
+    
+      & svg {
+        margin-right: 0.25rem;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &-logo {
+    display: flex;
+    align-items: center;
+
+    &-image {
+      max-width: 100%;
+      width: 200px;
+    }
+  }
+}
