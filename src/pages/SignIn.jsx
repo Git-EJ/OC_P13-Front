@@ -4,8 +4,13 @@ import NotConnectedButton from "../molecules/UserNotConnectedButton";
 import SignInInputs from "../atoms/SignInInputs";
 import Footer from "../atoms/Footer";
 
-const SignIn = () => {
 
+const SignIn = () => {
+  
+  const handleSignInSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted");
+  }
 
   return (
     <>
@@ -19,7 +24,7 @@ const SignIn = () => {
           <CircleUSerIcon />
           <h1>Sign In</h1>
 
-          <form>
+          <form onSubmit={ handleSignInSubmit }>
             <SignInInputs />
             <button className="sign-in-button">Sign In</button>
 
