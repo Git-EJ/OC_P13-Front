@@ -35,12 +35,26 @@
   }
 
   &-logo {
-    display: flex;
-    align-items: center;
+  
+    &_container {
+      display: flex;
+      align-items: center;
+      margin-right: 1rem;
+    }
 
-    &-image {
-      max-width: 100%;
-      width: 200px;
+    &_text1,
+    &_text2 {
+      width: fit-content;
+      font-size: 1.7rem;
+      padding: 0.6rem 0;
+    }
+
+    &_text1 {
+      color: $font-logo-text1-color;
+    }
+
+    &_text2 {
+      color: $font-logo-text2-color;
     }
   }
 }

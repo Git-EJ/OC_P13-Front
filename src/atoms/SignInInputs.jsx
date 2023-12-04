@@ -1,21 +1,26 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
+import PropTypes from 'prop-types'
 
+const SignInInputs = ({
+  email,
+  validateEmail,
+  onEmailChange=()=>{},
+  password,
+  validatePassword,
+  onPasswordChange=()=>{}
+}) => {
 
-const SignInInputs = () => {
+  const [checked, setChecked] = useState(!!localStorage.getItem('remember-me'))
 
-  const [userName, setUserName] = useState('')
-  const [password, setPassword] = useState('')
-  const [rememberMe, setRememberMe] = useState(false)
-  
-  
-  const arrayOfInputs = [
+  const arrayOfInputs = useMemo(() => [
     {
       label: "Username",
       text: "Username",
       type: "email",
       id: "username",
-      value: userName,
-      statUpdater: setUserName,
+      value: email,
+      error: validateEmail,
+      stateUpdater: (e) => onEmailChange(e),
     },
     {
       label: "Password",
@@ -23,27 +28,21 @@ const SignInInputs = () => {
       type: "password",
       id: "password",
       value: password,
-      statUpdater: setPassword,
+      error: validatePassword,
+      stateUpdater: (e) => onPasswordChange(e),
     },
     {
       label: "Remember me",
       text: "Remember me",
       type: "checkbox",
       id: "remember-me",
-      statUpdater: setRememberMe,
+      value: checked,
+      stateUpdater: (e) => {
+        setChecked(e.target.checked)
+        localStorage.setItem("remember-me", e.target.checked)
+      },
     }
-  ]
-
-
-  const handleInputChange = (e, stateUpdater) => {
-    stateUpdater(e.target.type === 'checkbox' ? e.target.checked : e.target.value)
-  }
-
-
-  console.log('userName: ', userName);
-  console.log('password: ', password);
-  console.log('rememberMe: ', rememberMe);
-
+  ], [checked, email, password, onEmailChange, onPasswordChange, validateEmail, validatePassword])
   
   return(
     <>
@@ -51,27 +50,35 @@ const SignInInputs = () => {
         return (
           <div className="input-wrapper" key={`input${index}`}>
             <label htmlFor={input.id}>{input.label}</label>
-            { !input.type === 'checkbox' ?
-              ( <input 
-                type={input.type}
-                id={input.id} 
-                value={input.value}
-                onChange={(e) => handleInputChange(e, input.statUpdater)}
-                /> 
-              ) 
-              : 
-              ( <input 
-                  type={input.type} 
-                  id={input.id} 
-                  onChange={(e) => handleInputChange(e, input.statUpdater)}
-                /> 
-              )
-            }
+            <input 
+              type={input.type}
+              id={input.id}
+              value={input.value}
+              checked={!!input.value}
+              onChange={(e) => input.stateUpdater(e)}
+            />
+            <div className="error-message">{input.error}</div>
           </div>
         )
       })}
     </>
   )
+}
+
+SignInInputs.propTypes = {
+  email: PropTypes.string,
+  validateEmail: PropTypes.string,
+  onEmailChange: PropTypes.func,
+  password: PropTypes.string,
+  validatePassword: PropTypes.string,
+  onPasswordChange: PropTypes.func,
+}
+
+SignInInputs.defaultProps = {
+  email: '',
+  password: '',
+  onEmailChange: () => {},
+  onPasswordChange: () => {},
 }
 
 export default SignInInputs

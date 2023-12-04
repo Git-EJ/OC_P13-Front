@@ -175,13 +175,21 @@ body {
 .main-nav-item_contents:hover {
   text-decoration: underline;
 }
-.main-nav-logo {
+.main-nav-logo_container {
   display: flex;
   align-items: center;
+  margin-right: 1rem;
 }
-.main-nav-logo-image {
-  max-width: 100%;
-  width: 200px;
+.main-nav-logo_text1, .main-nav-logo_text2 {
+  width: fit-content;
+  font-size: 1.7rem;
+  padding: 0.6rem 0;
+}
+.main-nav-logo_text1 {
+  color: #00BC77;
+}
+.main-nav-logo_text2 {
+  color: #005835;
 }
 
 .footer {

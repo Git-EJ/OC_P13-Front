@@ -8,7 +8,7 @@ import Error from "../pages/Error";
 const Router = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: "/sign-in", element: <SignIn /> },
-  { path: "/user/:id", element: <User />},
+  { path: "/user", element: <User />},
   { path: "/error/:errorCode", element: <Error /> },
   { path: "*", element: <Error /> },
 ])
