@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import CircleUSerIcon from "../assets/svg/CircleUserIcon";
 import TopBar from "../organisms/TopBar";
 import NotConnectedButton from "../molecules/UserNotConnectedButton";
@@ -7,7 +6,7 @@ import Footer from "../atoms/Footer";
 
 const SignIn = () => {
 
-  
+
   return (
     <>
       <TopBar>
@@ -22,20 +21,13 @@ const SignIn = () => {
 
           <form>
             <SignInInputs />
-            {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-            <NavLink to='/user/id' className="sign-in-button">
-              Sign In
-            </NavLink>
-            {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
-            {/* <button className="sign-in-button">Sign In</button> */}
-            {/* <!--  --> */}
+            <button className="sign-in-button">Sign In</button>
+
           </form>
         </section>
       </main>
-
-     <Footer />
+      <Footer />
     </>
   );
 };
-
 export default SignIn;
