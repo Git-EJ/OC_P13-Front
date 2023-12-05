@@ -10,10 +10,11 @@ const UserConnectedButton = () => {
 
   return (
     <div className="main-nav-item_container">
-      <NavLink to="/user/:id" className="main-nav-item_contents">
+      <NavLink to="/user/" className="main-nav-item_contents">
         <CircleUSerIcon />
         {firstName}
       </NavLink>
+      {/* TODO logout clear token from localStorage when not remember me*/}
       <NavLink to="/" className="main-nav-item_contents">
         <ArrowRightFromBracketIcon />
         Sign Out

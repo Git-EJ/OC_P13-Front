@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import axios from 'axios';
 
-
 const useAuth = () => {
   const HOST = 'http://localhost:3001/api/v1/user/';
 
@@ -9,7 +8,8 @@ const useAuth = () => {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
-  const authentificate = useCallback(async({email="", password=""}) => {
+
+  const authentificate = useCallback(async({ email="", password="" }) => {
     try {
       const loginResponse = await axios.post(HOST + 'login', {
         email: email,
@@ -25,14 +25,8 @@ const useAuth = () => {
       if (result && typeof result === 'string' && result.length > 0) {
         setToken(result)
         localStorage.setItem('token', result)
-        await axios.post(HOST + 'profile', {}, {
-          headers: {
-            'Authorization': `Bearer ${result}`
-          }
-        })
+        console.log('%c User FOUND', 'color:lime')
 
-        // console.log('%c resp.data', 'color:green', profileResponse.data.body.firstName)
-        // console.log('%c resp.data', 'color:green', profileResponse.data.body.lastName)
       } else {
         setToken("")
         setMessage("user not found")

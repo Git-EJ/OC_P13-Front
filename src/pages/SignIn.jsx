@@ -10,7 +10,7 @@ import useAuth from "../api/Auth";
 
 const SignIn = () => {
   
-  const { token, message, error, authentificate } = useAuth()
+  const { token, message, error, authentificate, profile } = useAuth()
 
   const navigate = useNavigate()
   const [email, setEmail] = useState('tony@stark.com') //DEV
@@ -33,6 +33,7 @@ const SignIn = () => {
     } else {
       setEmailMessage("email too short")
     }
+    console.log(email);
   }, [setEmail])
 
 
@@ -61,7 +62,7 @@ const SignIn = () => {
     } else if (error && error.length) {
       navigate ('/error')
     }
-  }, [token, error, navigate])
+  }, [token, error, navigate, profile])
 
 
   

@@ -1,9 +1,34 @@
+import { useContext, useEffect, useState } from "react"
+import UserContext from "../context/UserContext"
+import useUserProfile from "../api/Profile"
+
+
 const UserAccount = () => {
 
-  //DEV Mocked data
+  const { user } = useContext(UserContext)
+  const { profile } = useUserProfile()
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
+  console.log('USER USER ', user)
+  console.log('USER USER F&L: ',firstName, lastName)
 
-  const firstName = "Tony"
-  const lastName = "Jarvis"
+  
+  useEffect(() => {
+    const fetchUserData = async() => {
+      if (user && user.firstName && user.lastName) {
+        setFirstName(user.firstName)
+        setLastName(user.lastName)
+        setIsLoading(false)
+      } else {
+        setIsLoading(true)
+        await profile()
+      }
+    }
+  
+    fetchUserData()
+  }, [user, profile])
+  
   const title = "Argent Bank"
 
   const arrayOfAccounts = [
@@ -37,7 +62,7 @@ const UserAccount = () => {
           <h1>
             Welcome back
             <br />
-            {firstName} {lastName}!
+            {isLoading ? "Loading..." : `${firstName} ${lastName}!`}
           </h1>
           <button className="edit-button">Edit Name</button>
         </div>
@@ -46,18 +71,16 @@ const UserAccount = () => {
 
         {arrayOfAccounts.map((account, index) => {
           return (
-            <>
-              <section className="account" key={`account${index}`}>
-                <div className="account-content-wrapper">
-                  <h3 className="account-title">{title} {account.type} {account.number}</h3>
-                  <p className="account-amount">{account.amount}</p>
-                  <p className="account-amount-description">{account.amountDescription}</p>
-                </div>
-                <div className="account-content-wrapper cta">
-                  <button className="transaction-button">{account.button}</button>
-                </div>
-              </section>
-            </>
+            <section className="account" key={`account${index}`}>
+              <div className="account-content-wrapper">
+                <h3 className="account-title">{title} {account.type} {account.number}</h3>
+                <p className="account-amount">{account.amount}</p>
+                <p className="account-amount-description">{account.amountDescription}</p>
+              </div>
+              <div className="account-content-wrapper cta">
+                <button className="transaction-button">{account.button}</button>
+              </div>
+            </section>
           )
         })}
     </main>
