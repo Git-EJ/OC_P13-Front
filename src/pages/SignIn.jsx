@@ -10,11 +10,11 @@ import useAuth from "../api/Auth";
 
 const SignIn = () => {
   
-  const { token, message, error, authentificate, profile } = useAuth()
+  const { token, message, error, authentificate } = useAuth()
 
   const navigate = useNavigate()
-  const [email, setEmail] = useState('tony@stark.com') //DEV
-  const [password, setPassword] = useState('password123') //DEV
+  const [email, setEmail] = useState('steve@rogers.com') //DEV
+  const [password, setPassword] = useState('password456') //DEV
   const [emailMessage, setEmailMessage] = useState('')
   const [passwordMessage, setPasswordMessage] = useState('')
   const [fieldsValid, setFieldsValid] = useState(false)
@@ -62,7 +62,7 @@ const SignIn = () => {
     } else if (error && error.length) {
       navigate ('/error')
     }
-  }, [token, error, navigate, profile])
+  }, [token, error, navigate])
 
 
   

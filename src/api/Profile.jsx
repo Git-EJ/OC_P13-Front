@@ -1,6 +1,6 @@
 import axios from 'axios';
 import UserContext from "../context/UserContext";
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 const useUserProfile = () => {
   const HOST = 'http://localhost:3001/api/v1/user/'
@@ -8,6 +8,10 @@ const useUserProfile = () => {
   const { user, setUser } = useContext(UserContext)
 
   const token = localStorage.getItem('token')
+  
+  useEffect(() => {
+  console.log('%c USER profile jsx: ', 'color:orange', user)
+  }, [user])
 
   const profile = async() => {
     try {
@@ -21,8 +25,6 @@ const useUserProfile = () => {
     
       setUser({ firstName, lastName })
       
-      console.log('%c USER profile jsx: ', 'color:orange', user)
-
     } catch (err) {
       console.log('%c Erreur: ', 'color:red', err)
     }

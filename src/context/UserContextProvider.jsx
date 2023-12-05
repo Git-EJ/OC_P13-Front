@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react';
-import UserContext from './UserContext';
+import { useEffect, useState } from 'react'
+import UserContext from './UserContext'
 
 
 const UserContextProvider = ({ children }) => {
  
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
-    console.log('%c user contextProvider: ', 'color:lime', user)
+    console.log('%c user contextProvider: ', 'color:pink', user)
   }, [user])
 
   return (
