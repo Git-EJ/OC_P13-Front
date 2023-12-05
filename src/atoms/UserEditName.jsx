@@ -36,7 +36,7 @@ const UserEditName = ({ setIsEditing }) => {
 
   return (
     <div className="edit_name_wrapper">
-      <div className="edit_name_container">
+      <div className="edit_name_input_container">
         <input type="text" className="edit_name_input" onChange={onChangeFirstName} placeholder={user.firstName} />
         <input type="text" className="edit_name_input" onChange={onChangeLastName} placeholder={user.lastName} />
       </div>
@@ -50,7 +50,6 @@ const UserEditName = ({ setIsEditing }) => {
 
 UserEditName.propTypes = {
   setIsEditing: PropTypes.func.isRequired,
-  isEditing: PropTypes.bool.isRequired
 }
 
 export default UserEditName

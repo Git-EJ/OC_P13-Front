@@ -66,13 +66,20 @@ const UserAccount = () => {
 
     <main className="main bg-dark">
         <div className="header">
-          <h1>
-            Welcome back
-            <br />
-            {isLoading ? "Loading..." : `${firstName} ${lastName}!`}
-          </h1>
-          <button className="edit-button" onClick={handleEditName}>Edit Name</button>
-          {isEditing && <UserEditName setIsEditing={setIsEditing} />}
+          {!isEditing ? (
+            <>
+              <h1>Welcome back
+                <br />
+                {isLoading ? "Loading..." : `${firstName} ${lastName}!`}
+              </h1>
+              <button className="edit-button" onClick={handleEditName}>Edit Name</button>
+            </>
+          ) : (
+            <h1>Welcome back
+              <br />
+              <UserEditName setIsEditing={setIsEditing} />
+            </h1>
+          )}
         </div>
 
         <h2 className="sr-only">Accounts</h2>

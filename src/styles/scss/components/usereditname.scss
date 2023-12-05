@@ -1,0 +1,47 @@
+.edit_name {
+  &_wrapper {
+    @include flex_center_column;
+    width: 100%;
+  }
+
+  &_input_container {
+    @include flex_center_row;
+    width:fit-content;
+    margin-top: 1rem;
+  }
+
+  &_input {
+    height:2rem;
+    border: 2px solid #C3CFD9;
+    border-radius: 3px;
+    
+    &::placeholder {
+      font-family: $font;
+      color: $placeholder-font-color;
+      padding: 0 0.5rem;
+    }
+
+    &:first-child {
+      margin-right: 1rem;
+    }
+  }
+
+  &_button_container {
+    @include flex_center;
+    width:fit-content;
+    margin-top: 1rem;
+  }
+
+  &_button {
+    width: 110px;
+    border-radius: 3px;
+    font-family: $font;
+    color: $primary-color;
+    border: 2px solid $primary-color;
+    padding: 0.3rem 0.5rem;
+
+    &:first-child {
+      margin-right: 1rem;
+    }
+  }
+}

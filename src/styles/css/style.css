@@ -324,7 +324,7 @@ body {
 
 .header {
   color: #fff;
-  margin-bottom: 2rem;
+  margin: 1rem 0 2rem 0;
 }
 
 .edit-button {
@@ -390,6 +390,52 @@ body {
   .transaction-button {
     width: 200px;
   }
+}
+.edit_name_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+.edit_name_input_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: fit-content;
+  margin-top: 1rem;
+}
+.edit_name_input {
+  height: 2rem;
+  border: 2px solid #C3CFD9;
+  border-radius: 3px;
+}
+.edit_name_input::placeholder {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  color: #C3CFD9;
+  padding: 0 0.5rem;
+}
+.edit_name_input:first-child {
+  margin-right: 1rem;
+}
+.edit_name_button_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  margin-top: 1rem;
+}
+.edit_name_button {
+  width: 110px;
+  border-radius: 3px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  color: #00BC77;
+  border: 2px solid #00BC77;
+  padding: 0.3rem 0.5rem;
+}
+.edit_name_button:first-child {
+  margin-right: 1rem;
 }
 
 /*# sourceMappingURL=style.css.map */
