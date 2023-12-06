@@ -12,7 +12,7 @@
 
   &_input {
     height:2rem;
-    border: 2px solid #C3CFD9;
+    border: 2px solid $primary-border-color;
     border-radius: 3px;
     
     &::placeholder {

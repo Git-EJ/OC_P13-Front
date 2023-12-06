@@ -1,31 +1,30 @@
 import { useContext, useEffect, useState } from "react"
 import UserContext from "../context/UserContext"
 import useUserProfile from "../api/Profile"
-import UserEditName from "./UserEditName"
+import UserEditName from "../atoms/UserEditName"
+import { useNavigate } from "react-router"
 
 const title = "Argent Bank"
 
 const arrayOfAccounts = [
+  
   {
     type: "Checking",
     number: "(x8349)",
     amount: "$2,082.79",
     amountDescription: "Available Balance",
-    button: "View transactions"
   },
   {
     type: "Savings",
     number: "(x6712)",
     amount: "$10,928.42",
     amountDescription: "Available Balance",
-    button: "View transactions"
   },
   {
     type: "Credit Card",
     number: "(x8349)",
     amount: "$184.30",
     amountDescription: "Current Balance",
-    button: "View transactions"
   }
 ]
 
@@ -37,8 +36,10 @@ const UserAccount = () => {
   const [lastName, setLastName] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
-  console.log('USER USER ', user)
-  console.log('USER USER F&L: ',firstName, lastName)
+  const navigate = useNavigate()
+
+  console.log('USER UserAccount ', user)
+  console.log('USER UserAccount F&L: ',firstName, lastName)
 
 
   useEffect(() => {
@@ -59,6 +60,10 @@ const UserAccount = () => {
 
   const handleEditName = () => {
     setIsEditing(true)
+  }
+
+  const handleClickTransactions = () => {
+    navigate('/user/transactions')
   }
   
 
@@ -93,7 +98,7 @@ const UserAccount = () => {
                 <p className="account-amount-description">{account.amountDescription}</p>
               </div>
               <div className="account-content-wrapper cta">
-                <button className="transaction-button">{account.button}</button>
+                <button className="transaction-button" onClick={handleClickTransactions}>View transactions</button>
               </div>
             </section>
           )

@@ -1,7 +1,7 @@
 import TopBar from "../organisms/TopBar";
 import UserConnectedButton from "../molecules/UserConnectedButton";
 import Footer from "../atoms/Footer";
-import UserAccount from "../atoms/UserAccount";
+import UserAccount from "../molecules/UserAccount";
 
 
 const User = () => {

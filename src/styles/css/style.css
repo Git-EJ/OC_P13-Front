@@ -438,4 +438,91 @@ body {
   margin-right: 1rem;
 }
 
+.account_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.account_header_balance_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  font-weight: 600;
+  border: 2px solid #C3CFD9;
+  padding: 1rem;
+}
+.account_header_balance_title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+}
+.account_header_balance_amount {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+}
+.account_header_balance_available {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.7rem;
+}
+.account_transactions_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 3rem 0 2rem 0;
+  background: #12002B;
+}
+.account_transaction_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 90%;
+  padding: 1rem;
+  background: #fff;
+  border: 2px solid #C3CFD9;
+  font-size: 1.2rem;
+}
+.account_transaction_container:not(:last-child) {
+  border-bottom: none;
+}
+.account_transaction_date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  font-size: 0.8rem;
+}
+.account_transaction_description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  font-size: 0.8rem;
+}
+.account_transaction_amount {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  font-size: 0.8rem;
+}
+.account_transaction_balance {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  font-size: 0.8rem;
+}
+
 /*# sourceMappingURL=style.css.map */
