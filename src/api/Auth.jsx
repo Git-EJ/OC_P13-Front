@@ -37,6 +37,7 @@ const useAuth = () => {
       setToken("")
       setError(err)
       localStorage.removeItem('token')
+      localStorage.removeItem('remember-me')
     }
   }, [setToken, setMessage, setError])
 

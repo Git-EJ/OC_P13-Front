@@ -11,10 +11,12 @@ import useAuth from "../api/Auth";
 const SignIn = () => {
   
   const { token, message, error, authentificate } = useAuth()
+  console.log('message: ', message)
+  console.log('error: ', error)
 
   const navigate = useNavigate()
-  const [email, setEmail] = useState('steve@rogers.com') //DEV
-  const [password, setPassword] = useState('password456') //DEV
+  const [email, setEmail] = useState('') //DEV
+  const [password, setPassword] = useState('') //DEV
   const [emailMessage, setEmailMessage] = useState('')
   const [passwordMessage, setPasswordMessage] = useState('')
   const [fieldsValid, setFieldsValid] = useState(false)
@@ -28,22 +30,26 @@ const SignIn = () => {
 
 
   const validateEmail = useCallback((email) => {
-    if (email.length > 5) {
-      setEmail(email)
-    } else {
-      setEmailMessage("email too short")
-    }
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+(?<!\.{2})\.[a-zA-Z]{2,}$/
     console.log(email);
-  }, [setEmail])
+    if (!emailPattern.test(email)) {
+      setEmailMessage("Caractère(s) non autoris(é) et/ou format email incorrect")
+    } else {
+      setEmailMessage("")
+    }
+    setEmail(email)
+  }, [setEmail, setEmailMessage])
 
 
   const validatePassword = useCallback((password) => {
-    if (password.length > 3) {
-      setPassword(password)
+    const passwordPattern = /^[a-zA-Z0-9-_#*@&]*$/
+    if (!passwordPattern.test(password)) {
+    setPasswordMessage("Caractère(s) non autorisé(s), autorisé(s): -_#*@&")
     } else {
-      setPasswordMessage("password too short")
+      setPasswordMessage("")
+      setPassword(password)
     }
-  }, [setPassword])
+  }, [setPassword, setPasswordMessage])
 
 
   useEffect(() => {
@@ -65,6 +71,7 @@ const SignIn = () => {
   }, [token, error, navigate])
 
 
+
   
   return (
     <>
@@ -84,12 +91,13 @@ const SignIn = () => {
               validateEmail={emailMessage}
               validatePassword={passwordMessage}
               password={password}
-              onEmailChange={ (e) => validateEmail(e.target.value) }
-              onPasswordChange={ (e) => validatePassword(e.target.value) }
+              setPasswordMessage={setPasswordMessage}
+              onEmailChange={ (e) => validateEmail(e.target.value.trim().toLowerCase()) }
+              onPasswordChange={ (e) => validatePassword(e.target.value.trim()) }
             />
             <button type="submit" className="sign-in-button" disabled={!fieldsValid}>Sign In</button>
           </form>
-          <div className="login-logger">{message}</div>
+          {error ? <div className="login-logger">{error.response.data.message}</div> : null}
         </section>
       </main>
       <Footer />

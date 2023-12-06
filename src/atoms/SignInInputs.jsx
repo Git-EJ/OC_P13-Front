@@ -7,10 +7,14 @@ const SignInInputs = ({
   onEmailChange=()=>{},
   password,
   validatePassword,
-  onPasswordChange=()=>{}
+  onPasswordChange=()=>{},
 }) => {
+  
+  const [checked, setChecked] = useState(() => {
+    const rememberMeValue = localStorage.getItem('remember-me')
+    return rememberMeValue ? !!JSON.parse(rememberMeValue) : !!false
+  })
 
-  const [checked, setChecked] = useState(!!localStorage.getItem('remember-me'))
 
   const arrayOfInputs = useMemo(() => [
     {
@@ -19,7 +23,9 @@ const SignInInputs = ({
       type: "email",
       id: "username",
       value: email,
+      placeholder: "example@domain.com",
       error: validateEmail,
+      required: true,
       stateUpdater: (e) => onEmailChange(e),
     },
     {
@@ -28,7 +34,11 @@ const SignInInputs = ({
       type: "password",
       id: "password",
       value: password,
+      placeholder: "8 to 32 characters",
       error: validatePassword,
+      required: true,
+      minLength: 8,
+      maxLength: 32,
       stateUpdater: (e) => onPasswordChange(e),
     },
     {
@@ -36,7 +46,8 @@ const SignInInputs = ({
       text: "Remember me",
       type: "checkbox",
       id: "remember-me",
-      value: checked,
+      checked: checked,
+      required: false,
       stateUpdater: (e) => {
         setChecked(e.target.checked)
         localStorage.setItem("remember-me", e.target.checked)
@@ -50,14 +61,27 @@ const SignInInputs = ({
         return (
           <div className="input-wrapper" key={`input${index}`}>
             <label htmlFor={input.id}>{input.label}</label>
-            <input 
-              type={input.type}
-              id={input.id}
-              value={input.value}
-              checked={!!input.value}
-              onChange={(e) => input.stateUpdater(e)}
-            />
-            <div className="error-message">{input.error}</div>
+            {input.type !== "checkbox" ? (
+              <input 
+                type= {input.type}
+                id= {input.id}
+                defaultValue= {input.value}
+                placeholder={input.placeholder}
+                required= {input.required}
+                minLength={input.minLength ? input.minLength : null}
+                maxLength={input.maxLength ? input.maxLength : null}
+                onBlur= {(e) => input.stateUpdater(e)}
+              />
+            ) : (
+              <input 
+                type= {input.type}
+                id= {input.id}
+                defaultChecked= {!!input.checked}
+                required= {input.required}
+                onChange= {(e) => input.stateUpdater(e)}
+              />
+            )}
+            <div className="input_error-message">{input.error}</div>
           </div>
         )
       })}
