@@ -458,7 +458,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.9rem;
 }
 .account_header_balance_amount {
   display: flex;
@@ -491,38 +490,19 @@ body {
   padding: 1rem;
   background: #fff;
   border: 2px solid #C3CFD9;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
 }
 .account_transaction_container:not(:last-child) {
   border-bottom: none;
 }
-.account_transaction_date {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.account_transaction_date, .account_transaction_amount, .account_transaction_balance {
   width: 20%;
-  font-size: 0.8rem;
 }
 .account_transaction_description {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 40%;
-  font-size: 0.8rem;
-}
-.account_transaction_amount {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20%;
-  font-size: 0.8rem;
-}
-.account_transaction_balance {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20%;
-  font-size: 0.8rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /*# sourceMappingURL=style.css.map */

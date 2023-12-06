@@ -86,31 +86,48 @@ const arrayOfAccountsTransactions = [
 
 
 const UserTransactions = () => {
-  const accountBalance = arrayOfAccountsTransactions.map((account) => {
-    return account.arrayOfTransactions.reduce((acc, transaction) => {
-      if (transaction.type === "Deposit") {
-        return acc + transaction.amount
-      } else {
-        return acc - transaction.amount
-      }
-    }, 0)
-  })
+  
+  let oldBalanceAmount = 0
 
-
+  const sortedTransactionsByDate = () => {
+    const allTransactions = arrayOfAccountsTransactions.flatMap((account) => account.arrayOfTransactions)
+    return allTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
+  }
+  
+  const arrayOfSortedTransactions = sortedTransactionsByDate()
+  
   const formatDate = (date) => {
     const format = { year: 'numeric', month: 'long', day: '2-digit' }
     return new Date(date).toLocaleDateString('en-US', format)
   }
   
-  const sortedTransactionsByDate = () => {
-    const allTransactions = arrayOfAccountsTransactions.flatMap((account) => account.arrayOfTransactions)
-    return allTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
+  //TODO : need it or last transaction balance?????
+  const accountBalance = arrayOfSortedTransactions.reduce((acc, transaction) => {
+    if (transaction.type === "Deposit") {
+      return acc + transaction.amount
+    } else {
+      return acc - transaction.amount
+    }
+  }, oldBalanceAmount)
+
+
+
+  //TODO : better way to dit than .unshift ????
+  const calculateAfterTransactionBalance = () => {
+
+    const balances = []
+    for (let i = arrayOfSortedTransactions.length - 1; i >= 0; i--) {
+      const transaction = arrayOfSortedTransactions[i]
+      transaction.type === "Deposit" ? (oldBalanceAmount += transaction.amount) : (oldBalanceAmount -= transaction.amount)
+      balances.unshift(oldBalanceAmount)
+    }
+    return balances
   }
 
-  const arrayOfSortedTransactions = sortedTransactionsByDate()
+  const transactionBalance = calculateAfterTransactionBalance()
 
 
-
+  console.log('accountBalance', accountBalance)
 
   return (
     <>
@@ -122,7 +139,7 @@ const UserTransactions = () => {
         <main key={`account${index}`} className="account_wrapper">
           <div key= {`accountHeader${index}`} className="account_header_balance_container">
             <div className="account_header_balance_title">Argent Bank Transactions {`(${account.accountNumber})`}</div>
-            <div className="account_header_balance_amount">$ {accountBalance}</div>
+            <div className="account_header_balance_amount">$ {accountBalance.toFixed(2)}</div>
             <div className="account_header_balance_available"> Available Balance</div>
           </div>
 
@@ -131,9 +148,10 @@ const UserTransactions = () => {
                 <div key={`accountTransaction${index}`}className="account_transaction_container">
                   <div className="account_transaction_date">{formatDate(transaction.date)}</div>
                   <div className="account_transaction_description">{transaction.description}</div>
-                  <div className="account_transaction_amount">{transaction.type === 'Withdrawal' ?  `- $${transaction.amount}` : `+ $${transaction.amount}`}</div>
-                  <div className="account_transaction_type">$ T.BALANCE</div>
-                  {/* TODO <div className="account_transaction_type">${transactionBalance}</div> */} 
+                  <div className="account_transaction_amount">
+                    {transaction.type === 'Withdrawal' ? `- $${transaction.amount.toFixed(2)}` : `+ $${transaction.amount.toFixed(2)}`}
+                  </div>
+                  <div className="account_transaction_balance">${transactionBalance[index].toFixed(2)}</div> 
                 </div>
             ))}
           </div>
