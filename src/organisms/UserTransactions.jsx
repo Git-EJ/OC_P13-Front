@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import TopBar from "./TopBar"
 import UserConnectedButton from "../molecules/UserConnectedButton"
 import Footer from "../atoms/Footer"
+import ChevronUp from "../assets/svg/ChevronUp"
+import ChevronDown from "../assets/svg/ChevronDown"
 
 const arrayOfAccountsTransactions = [
   {
@@ -93,7 +95,6 @@ const UserTransactions = () => {
     const allTransactions = arrayOfAccountsTransactions.flatMap((account) => account.arrayOfTransactions)
     return allTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
   }
-  
   const arrayOfSortedTransactions = sortedTransactionsByDate()
   
   const formatDate = (date) => {
@@ -109,9 +110,8 @@ const UserTransactions = () => {
       return acc - transaction.amount
     }
   }, oldBalanceAmount)
-
-
-
+  
+  
   //TODO : better way to dit than .unshift ????
   const calculateAfterTransactionBalance = () => {
 
@@ -123,11 +123,17 @@ const UserTransactions = () => {
     }
     return balances
   }
-
   const transactionBalance = calculateAfterTransactionBalance()
 
-
-  console.log('accountBalance', accountBalance)
+  
+    const [isOpenIndex, setIsOpenIndex] = useState(Array(arrayOfSortedTransactions.length).fill(false))
+    console.log(isOpenIndex);
+    const clickChevron = (index) => {
+      const newIsOpenIndex = [...isOpenIndex]
+      newIsOpenIndex[index] = !newIsOpenIndex[index]
+      setIsOpenIndex(newIsOpenIndex)
+    }
+    
 
   return (
     <>
@@ -146,6 +152,7 @@ const UserTransactions = () => {
           <div className="account_transactions_wrapper">
             {arrayOfSortedTransactions.map((transaction, index) => (
                 <div key={`accountTransaction${index}`}className="account_transaction_container">
+                  <div className="account_transaction_chevron" onClick={() => clickChevron(index)}>{isOpenIndex[index] ? <ChevronUp /> : <ChevronDown />}</div>
                   <div className="account_transaction_date">{formatDate(transaction.date)}</div>
                   <div className="account_transaction_description">{transaction.description}</div>
                   <div className="account_transaction_amount">
@@ -157,7 +164,7 @@ const UserTransactions = () => {
           </div>
         </main>
       ))}
-      
+
       <Footer />
     </>
   )

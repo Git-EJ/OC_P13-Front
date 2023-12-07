@@ -1,7 +1,7 @@
 .account {
 
   &_wrapper {
-    @include flex_center_col umn;
+    @include flex_center_column;
   }
 
   &_header_balance {
