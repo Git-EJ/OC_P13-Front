@@ -3,117 +3,115 @@ import Pencil from '../assets/svg/Pencil'
 import { useEffect, useState } from 'react'
 import Xmark from '../assets/svg/Xmark'
 
+
 const DropDown = ({ index, transaction, isOpenIndex }) => {
+  
+  const firstLetterUpperCase = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+  }
 
-    const firstLetterUpperCase = (string) => {
-      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+  const [isEditingNotes, setIsEditingNotes] = useState(false)
+  const [isEditingCategory, setIsEditingCategory] = useState(false)
+  const [temporaryNotesValue, setTemporaryNotesValue] = useState('')
+  const [temporaryCategoryValue, setTemporaryCategoryValue] = useState('')
+  const [inputNotesValue, setInputNotesValue] = useState(firstLetterUpperCase(transaction.additionalDetails.notes))
+  const [inputCategoryValue, setInputCategoryValue] = useState(firstLetterUpperCase(transaction.additionalDetails.category))
+  
+
+  const clickPencil = (arg) => {
+    if (arg === 'category') {
+      setIsEditingCategory(!isEditingCategory)
+    } else if (arg === 'notes') {
+      setIsEditingNotes(!isEditingNotes)
     }
-
-    const [isEditingNotes, setIsEditingNotes] = useState(false)
-    const [isEditingCategory, setIsEditingCategory] = useState(false)
-    const [temporaryNotesValue, setTemporaryNotesValue] = useState('')
-    const [temporaryCategoryValue, setTemporaryCategoryValue] = useState('')
-    const [inputNotesValue, setInputNotesValue] = useState(firstLetterUpperCase(transaction.additionalDetails.notes))
-    const [inputCategoryValue, setInputCategoryValue] = useState(firstLetterUpperCase(transaction.additionalDetails.category))
-    
-
-    useEffect(() => {
-      console.log('isEditingCategory:', isEditingCategory)
-      console.log('temporaryCategoryValue:', temporaryCategoryValue)
-      console.log('inputCategoryValue:', inputCategoryValue)
-    }, [isEditingCategory, temporaryCategoryValue, inputCategoryValue])
-    
-    
-    
-    // TODO : Regex and max length
-    const clickPencil = (arg) => {
-      if (arg === 'category') {
-        setIsEditingCategory(!isEditingCategory)
-        setInputCategoryValue(temporaryCategoryValue)
-        setTemporaryCategoryValue('')
-
-      } else if (arg === 'notes') {
-        setIsEditingNotes(!isEditingNotes)
-        setInputNotesValue(temporaryNotesValue)
-        setTemporaryNotesValue('')
-      }
+  }
+  
+  // TODO : Regex and max length
+  const clickChangeValue = (arg) => {
+    if (arg === 'category') {
+      setInputCategoryValue(temporaryCategoryValue)
+      setIsEditingCategory(!isEditingCategory)
+      setTemporaryCategoryValue('')
+    } else if (arg === 'notes') {
+      setInputNotesValue(temporaryNotesValue)
+      setIsEditingNotes(!isEditingNotes)
+      setTemporaryNotesValue('')
     }
+  }
 
-    
-    // TOTO : clickPencil and clickCancel are very similar, dont't need setInputs? clickPencil is enought with maybe another name?
-    const clickCancel = (arg) => {
-      if (arg === 'category') {
-        setIsEditingCategory(!isEditingCategory)
-        setTemporaryCategoryValue('')
-      }
-      if (arg === 'notes') {
-        setIsEditingNotes(!isEditingNotes)
-        setTemporaryNotesValue('')
-      }
+  const clickCancel = (arg) => {
+    if (arg === 'category') {
+      setInputCategoryValue(inputCategoryValue)
+      setIsEditingCategory(!isEditingCategory)
     }
+    if (arg === 'notes') {
+      setInputNotesValue(inputNotesValue)
+      setIsEditingNotes(!isEditingNotes)
+    }
+  }
+
+  const details = [
+    {
+      label: 'Category',
+      value: inputCategoryValue,
+      isEditing: isEditingCategory,
+      setTemporaryValue: setTemporaryCategoryValue,
+      clickPencil: () => clickPencil('category'),
+      clickChangeValue: () => clickChangeValue('category'),
+      clickCancel: () => clickCancel('category'),
+    },
+    {
+      label: 'Notes',
+      value: inputNotesValue,
+      isEditing: isEditingNotes,
+      setTemporaryValue: setTemporaryNotesValue,
+      clickPencil: () => clickPencil('notes'),
+      clickChangeValue: () => clickChangeValue('notes'),
+      clickCancel: () => clickCancel('notes'),
+    }
+  ]
 
   return (
     <>
       {isOpenIndex[index] ? (
         <div className="account_transaction_additional_details_container">
+
           <div className='account_transaction_additional_details_transaction-type'>
             Transaction Type: {transaction.additionalDetails.transactionType}          
           </div>
 
-          <div className='account_transaction_additional_details_category'>
-            
-            <div className='account_transaction_additional_details_category_text'>
-              Category: {inputCategoryValue}
-            </div>
-
-            <div className='account_transaction_additional_details_category_edit'>
-
-              {isEditingCategory &&
-                <input type="text" className="account_transaction_additional_details_category_edit_input" onChange={(e) => setTemporaryCategoryValue(e.target.value)} />
-              }
-           
-              <div className='account_transaction_additional_details_category_edit_icon' onClick={() => clickPencil('category')}>
-                <Pencil color={isEditingCategory ? '#008000' : '#2c3e50' } />
+          {details.map((detail, index) => (
+            <div className={`account_transaction_additional_details_${detail.label.toLowerCase()}`} key={index}>
+              <div className={`account_transaction_additional_details_${detail.label.toLowerCase()}_text`}>
+                {detail.label}: {detail.value}
               </div>
 
-              {isEditingCategory &&
-                <div className='account_transaction_additional_details_category_edit_cancel' onClick={() => clickCancel('category')}>
-                  <Xmark />
+              <div className={`account_transaction_additional_details_${detail.label.toLowerCase()}_edit`}>
+                {detail.isEditing && (
+                  <input  type="text" 
+                          className={`account_transaction_additional_details_${detail.label.toLowerCase()}_edit_input`} 
+                          onChange={(e) => detail.setTemporaryValue(e.target.value)}
+                  />
+                )}
+
+                <div  className={`account_transaction_additional_details_${detail.label.toLowerCase()}_edit_icon`}  
+                      onClick={detail.isEditing ? detail.clickChangeValue : detail.clickPencil}
+                >
+                  <Pencil color={detail.isEditing ? '#008000' : '#2c3e50'} />
                 </div>
 
-              }
-            </div>
-          </div>
-          
-          
-          <div className='account_transaction_additional_details_notes'>
-
-            <div className='account_transaction_additional_details_notes_text'>
-              Notes: {inputNotesValue}
-            </div>
-
-            <div className='account_transaction_additional_details_notes_edit'>
-
-              {isEditingNotes && 
-                <input type="text" className="account_transaction_additional_details_notes_edit_input" onChange={(e) => setTemporaryNotesValue(e.target.value)}/>
-              }
-
-              <div className='account_transaction_additional_details_notes_edit_icon' onClick={ () => clickPencil('notes')}>
-                <Pencil color={isEditingNotes ? '#008000' : '#2c3e50' } />
+                {detail.isEditing && (
+                  <div className={`account_transaction_additional_details_${detail.label.toLowerCase()}_edit_cancel`} onClick={detail.clickCancel} >
+                    <Xmark />
+                  </div>
+                )}
               </div>
-          
-              {isEditingNotes &&
-                <div className='account_transaction_additional_details_notes_edit_cancel' onClick={() => clickCancel('notes')}>
-                  <Xmark />
-                </div>
-              }
-
             </div>
-          </div>
+          ))}
 
         </div>
       ) : null}
-      </>
+    </>
   )
 }
 
