@@ -18,31 +18,24 @@ const DropDown = ({ index, transaction, isOpenIndex }) => {
     
 
     useEffect(() => {
-      console.log('isEditingNotes:', isEditingNotes)
-      console.log('temporaryNotesValue:', temporaryNotesValue)
-      console.log('inputNotesValue:', inputNotesValue)
-    }, [isEditingNotes, temporaryNotesValue, inputNotesValue])
+      console.log('isEditingCategory:', isEditingCategory)
+      console.log('temporaryCategoryValue:', temporaryCategoryValue)
+      console.log('inputCategoryValue:', inputCategoryValue)
+    }, [isEditingCategory, temporaryCategoryValue, inputCategoryValue])
     
     
     
-    // TODO : Regex and max length and no value entry reset to '' input value
+    // TODO : Regex and max length
     const clickPencil = (arg) => {
-      if (!isEditingNotes) {
-        if (arg === 'category') {
-          setIsEditingCategory(!isEditingCategory)
-        } else if (arg === 'notes') {
-          setIsEditingNotes(!isEditingNotes)
-        }
-      }
+      if (arg === 'category') {
+        setIsEditingCategory(!isEditingCategory)
+        setInputCategoryValue(temporaryCategoryValue)
+        setTemporaryCategoryValue('')
 
-      if (isEditingNotes) {
-        if (arg === 'category') {
-          setInputCategoryValue(temporaryCategoryValue)
-          setIsEditingCategory(!isEditingCategory)
-        } else if (arg === 'notes') {
-          setInputNotesValue(temporaryNotesValue)
-          setIsEditingNotes(!isEditingNotes)
-        }
+      } else if (arg === 'notes') {
+        setIsEditingNotes(!isEditingNotes)
+        setInputNotesValue(temporaryNotesValue)
+        setTemporaryNotesValue('')
       }
     }
 
@@ -51,7 +44,7 @@ const DropDown = ({ index, transaction, isOpenIndex }) => {
     const clickCancel = (arg) => {
       if (arg === 'category') {
         setIsEditingCategory(!isEditingCategory)
-        setInputCategoryValue(inputCategoryValue)
+        setTemporaryCategoryValue('')
       }
       if (arg === 'notes') {
         setIsEditingNotes(!isEditingNotes)
@@ -70,55 +63,57 @@ const DropDown = ({ index, transaction, isOpenIndex }) => {
           <div className='account_transaction_additional_details_category'>
             
             <div className='account_transaction_additional_details_category_text'>
-              Category: {firstLetterUpperCase(transaction.additionalDetails.category)}
+              Category: {inputCategoryValue}
             </div>
+
             <div className='account_transaction_additional_details_category_edit'>
-              {isEditingCategory ? (
-                <input type="text" className="account_transaction_additional_details_category_edit_input" />
-                ) : null
+
+              {isEditingCategory &&
+                <input type="text" className="account_transaction_additional_details_category_edit_input" onChange={(e) => setTemporaryCategoryValue(e.target.value)} />
               }
            
               <div className='account_transaction_additional_details_category_edit_icon' onClick={() => clickPencil('category')}>
-                <Pencil />
+                <Pencil color={isEditingCategory ? '#008000' : '#2c3e50' } />
               </div>
+
+              {isEditingCategory &&
+                <div className='account_transaction_additional_details_category_edit_cancel' onClick={() => clickCancel('category')}>
+                  <Xmark />
+                </div>
+
+              }
             </div>
           </div>
           
           
           <div className='account_transaction_additional_details_notes'>
+
             <div className='account_transaction_additional_details_notes_text'>
               Notes: {inputNotesValue}
             </div>
-            
+
             <div className='account_transaction_additional_details_notes_edit'>
-              {isEditingNotes ? (
+
+              {isEditingNotes && 
                 <input type="text" className="account_transaction_additional_details_notes_edit_input" onChange={(e) => setTemporaryNotesValue(e.target.value)}/>
-               ) : null
               }
 
-              {isEditingNotes ? (
-                <div className='account_transaction_additional_details_notes_edit_icon' onClick={ () => clickPencil('notes')}>
-                  <Pencil color= '#008000' />
-                </div>
-                ) : (
-                  <div className='account_transaction_additional_details_notes_edit_icon' onClick={ () => clickPencil('notes')}>
-                   <Pencil color= '#2c3e50' />
-                  </div>
-                )
-              }
+              <div className='account_transaction_additional_details_notes_edit_icon' onClick={ () => clickPencil('notes')}>
+                <Pencil color={isEditingNotes ? '#008000' : '#2c3e50' } />
+              </div>
           
-              {isEditingNotes ? (
+              {isEditingNotes &&
                 <div className='account_transaction_additional_details_notes_edit_cancel' onClick={() => clickCancel('notes')}>
                   <Xmark />
                 </div>
-                ) : null
               }
+
             </div>
           </div>
 
         </div>
       ) : null}
-    </>
+      </>
   )
 }
 
