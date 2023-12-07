@@ -42,8 +42,8 @@
 
   &_transaction {
 
-    &_container {
-      @include flex_center_row;
+    &_wrapper {
+      @include flex_center_column;
       width: 90%;
       padding: 1rem;
       background: #fff;
@@ -55,17 +55,79 @@
       }
     }
 
-    &_date,
+    &_container {
+      @include flex_center;
+      width: 100%;
+    }
+
+    &_chevron {
+      width: 8%;
+    }
+
+    &_date {
+      width:17%;
+      text-align: left;
+    }
+
     &_amount,
     &_balance {
       width: 20%;
     }
 
+
     &_description {
-      width: 40%;
+      width: 35%;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis
+    }
+  }
+
+  &_transaction_additional_details {
+    
+    &_container {
+      @include flex_center_column;
+      align-items: flex-start;
+      width: 100%;
+      padding-left: 8%;
+    }
+
+    &_transaction-type,
+    &_category,
+    &_notes {
+      @include flex_center_row;
+      justify-content: flex-start;
+      width: 100%;
+      
+      &:first-child {
+        margin-top: 1rem;
+      }
+    
+      &:not(:first-child) {
+        margin-top: 0.5rem;
+      }
+    }
+
+    &_category,
+    &_notes {
+
+      &_edit {
+        @include flex_center_row;
+        cursor: pointer;
+
+        &_input {
+          margin-left: 0.75rem;
+          border: 1px solid $primary-border-color;
+        }
+
+        &_icon {
+          margin-left: 0.75rem;
+        }
+
+        &_cancel {
+          margin-left: 0.75rem;
+        }
+      }
     }
   }
 }

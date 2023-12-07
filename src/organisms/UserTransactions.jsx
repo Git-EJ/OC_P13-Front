@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import TopBar from "./TopBar"
 import UserConnectedButton from "../molecules/UserConnectedButton"
 import Footer from "../atoms/Footer"
+import DropDown from "../molecules/DropDown"
 import ChevronUp from "../assets/svg/ChevronUp"
 import ChevronDown from "../assets/svg/ChevronDown"
 
@@ -127,13 +128,15 @@ const UserTransactions = () => {
 
   
     const [isOpenIndex, setIsOpenIndex] = useState(Array(arrayOfSortedTransactions.length).fill(false))
-    console.log(isOpenIndex);
+    useEffect(() => {
+      console.log('isOpenIndex:', isOpenIndex)
+    }, [isOpenIndex])
+
     const clickChevron = (index) => {
       const newIsOpenIndex = [...isOpenIndex]
       newIsOpenIndex[index] = !newIsOpenIndex[index]
       setIsOpenIndex(newIsOpenIndex)
     }
-    
 
   return (
     <>
@@ -151,7 +154,9 @@ const UserTransactions = () => {
 
           <div className="account_transactions_wrapper">
             {arrayOfSortedTransactions.map((transaction, index) => (
-                <div key={`accountTransaction${index}`}className="account_transaction_container">
+              <div key={`accountTransaction${index}`}className="account_transaction_wrapper">
+                
+                <div className="account_transaction_container">
                   <div className="account_transaction_chevron" onClick={() => clickChevron(index)}>{isOpenIndex[index] ? <ChevronUp /> : <ChevronDown />}</div>
                   <div className="account_transaction_date">{formatDate(transaction.date)}</div>
                   <div className="account_transaction_description">{transaction.description}</div>
@@ -160,11 +165,16 @@ const UserTransactions = () => {
                   </div>
                   <div className="account_transaction_balance">${transactionBalance[index].toFixed(2)}</div> 
                 </div>
+                
+                {isOpenIndex[index] ? (
+                  <DropDown index={index} transaction={transaction} isOpenIndex={isOpenIndex} />
+                ) : null}
+                
+              </div>
             ))}
           </div>
         </main>
       ))}
-
       <Footer />
     </>
   )

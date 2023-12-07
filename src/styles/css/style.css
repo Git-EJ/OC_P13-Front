@@ -481,28 +481,81 @@ body {
   padding: 3rem 0 2rem 0;
   background: #12002B;
 }
-.account_transaction_container {
+.account_transaction_wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   width: 90%;
   padding: 1rem;
   background: #fff;
   border: 2px solid #C3CFD9;
   font-size: 0.9rem;
 }
-.account_transaction_container:not(:last-child) {
+.account_transaction_wrapper:not(:last-child) {
   border-bottom: none;
 }
-.account_transaction_date, .account_transaction_amount, .account_transaction_balance {
+.account_transaction_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.account_transaction_chevron {
+  width: 8%;
+}
+.account_transaction_date {
+  width: 17%;
+  text-align: left;
+}
+.account_transaction_amount, .account_transaction_balance {
   width: 20%;
 }
 .account_transaction_description {
-  width: 40%;
+  width: 35%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.account_transaction_additional_details_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding-left: 8%;
+}
+.account_transaction_additional_details_transaction-type, .account_transaction_additional_details_category, .account_transaction_additional_details_notes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+}
+.account_transaction_additional_details_transaction-type:first-child, .account_transaction_additional_details_category:first-child, .account_transaction_additional_details_notes:first-child {
+  margin-top: 1rem;
+}
+.account_transaction_additional_details_transaction-type:not(:first-child), .account_transaction_additional_details_category:not(:first-child), .account_transaction_additional_details_notes:not(:first-child) {
+  margin-top: 0.5rem;
+}
+.account_transaction_additional_details_category_edit, .account_transaction_additional_details_notes_edit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  cursor: pointer;
+}
+.account_transaction_additional_details_category_edit_input, .account_transaction_additional_details_notes_edit_input {
+  margin-left: 0.75rem;
+  border: 1px solid #C3CFD9;
+}
+.account_transaction_additional_details_category_edit_icon, .account_transaction_additional_details_notes_edit_icon {
+  margin-left: 0.75rem;
+}
+.account_transaction_additional_details_category_edit_cancel, .account_transaction_additional_details_notes_edit_cancel {
+  margin-left: 0.75rem;
 }
 
 /*# sourceMappingURL=style.css.map */
