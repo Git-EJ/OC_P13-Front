@@ -127,16 +127,16 @@ const UserTransactions = () => {
   const transactionBalance = calculateAfterTransactionBalance()
 
   
-    const [isOpenIndex, setIsOpenIndex] = useState(Array(arrayOfSortedTransactions.length).fill(false))
-    useEffect(() => {
-      console.log('isOpenIndex:', isOpenIndex)
-    }, [isOpenIndex])
+  const [isOpenIndex, setIsOpenIndex] = useState(Array(arrayOfSortedTransactions.length).fill(false))
+  useEffect(() => {
+    console.log('isOpenIndex:', isOpenIndex)
+  }, [isOpenIndex])
 
-    const clickChevron = (index) => {
-      const newIsOpenIndex = [...isOpenIndex]
-      newIsOpenIndex[index] = !newIsOpenIndex[index]
-      setIsOpenIndex(newIsOpenIndex)
-    }
+  const clickChevron = (index) => {
+    const newIsOpenIndex = [...isOpenIndex]
+    newIsOpenIndex[index] = !newIsOpenIndex[index]
+    setIsOpenIndex(newIsOpenIndex)
+  }
 
   return (
     <>
@@ -145,6 +145,7 @@ const UserTransactions = () => {
       </TopBar>
 
       {arrayOfAccountsTransactions.map((account, index) => (
+
         <main key={`account${index}`} className="account_wrapper">
           <div key= {`accountHeader${index}`} className="account_header_balance_container">
             <div className="account_header_balance_title">Argent Bank Transactions {`(${account.accountNumber})`}</div>
@@ -153,11 +154,22 @@ const UserTransactions = () => {
           </div>
 
           <div className="account_transactions_wrapper">
+            <div className="account_transactions_menu_container">
+              <span className="account_transactions_menu_chevron"></span> {/* empty for align menu with transactions  */}
+              <span className="account_transactions_menu_date">Date</span>
+              <span className="account_transactions_menu_description">Description</span>
+              <span className="account_transactions_menu_amount">Amount</span>
+              <span className="account_transactions_menu_balance">Balance</span>
+            </div>
+
             {arrayOfSortedTransactions.map((transaction, index) => (
+
               <div key={`accountTransaction${index}`}className="account_transaction_wrapper">
                 
                 <div className="account_transaction_container">
-                  <div className="account_transaction_chevron" onClick={() => clickChevron(index)}>{isOpenIndex[index] ? <ChevronUp /> : <ChevronDown />}</div>
+                  <div className="account_transaction_chevron" onClick={() => clickChevron(index)}>
+                    {isOpenIndex[index] ? <ChevronUp /> : <ChevronDown />}
+                  </div>
                   <div className="account_transaction_date">{formatDate(transaction.date)}</div>
                   <div className="account_transaction_description">{transaction.description}</div>
                   <div className="account_transaction_amount">
@@ -166,10 +178,9 @@ const UserTransactions = () => {
                   <div className="account_transaction_balance">${transactionBalance[index].toFixed(2)}</div> 
                 </div>
                 
-                {isOpenIndex[index] ? (
+                {isOpenIndex[index] &&
                   <DropDown index={index} transaction={transaction} isOpenIndex={isOpenIndex} />
-                ) : null}
-                
+                }
               </div>
             ))}
           </div>

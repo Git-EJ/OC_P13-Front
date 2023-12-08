@@ -443,6 +443,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  flex: 1;
 }
 .account_header_balance_container {
   display: flex;
@@ -480,6 +481,30 @@ body {
   width: 100%;
   padding: 3rem 0 2rem 0;
   background: #12002B;
+  flex: 1;
+}
+.account_transactions_menu_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  padding: 0.5rem 1rem;
+  background: #00BC77;
+  font-size: 0.9rem;
+  color: #fff;
+}
+.account_transactions_menu_chevron {
+  width: 8%;
+}
+.account_transactions_menu_date {
+  width: 17%;
+  text-align: left;
+}
+.account_transactions_menu_description {
+  width: 35%;
+}
+.account_transactions_menu_amount, .account_transactions_menu_balance {
+  width: 20%;
 }
 .account_transaction_wrapper {
   display: flex;
@@ -517,6 +542,7 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
 .account_transaction_additional_details_container {
   display: flex;
   justify-content: center;

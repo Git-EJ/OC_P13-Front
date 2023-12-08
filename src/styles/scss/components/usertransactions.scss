@@ -2,6 +2,7 @@
 
   &_wrapper {
     @include flex_center_column;
+    flex: 1;
   }
 
   &_header_balance {
@@ -37,6 +38,38 @@
       width: 100%;
       padding: 3rem 0 2rem 0;
       background: $tertiary-color;
+      flex:1;
+    }
+
+    &_menu {
+
+      &_container {
+        @include flex_center;
+        width: 90%;
+        padding: 0.5rem 1rem;
+        background: $primary-color;
+        font-size: 0.9rem;
+        color: #fff;
+      }
+
+      &_chevron {
+        width: 8%;
+      }
+
+      &_date {
+        width:17%;
+        text-align: left;
+      }
+
+      &_description {
+        width: 35%;
+      }
+
+      &_amount,
+      &_balance {
+        width: 20%;
+      }
+
     }
   }
 
@@ -74,60 +107,11 @@
       width: 20%;
     }
 
-
     &_description {
       width: 35%;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis
-    }
-  }
-
-  &_transaction_additional_details {
-    
-    &_container {
-      @include flex_center_column;
-      align-items: flex-start;
-      width: 100%;
-      padding-left: 8%;
-    }
-
-    &_transaction-type,
-    &_category,
-    &_notes {
-      @include flex_center_row;
-      justify-content: flex-start;
-      width: 100%;
-      
-      &:first-child {
-        margin-top: 1rem;
-      }
-    
-      &:not(:first-child) {
-        margin-top: 0.5rem;
-      }
-    }
-
-    &_category,
-    &_notes {
-
-      &_edit {
-        @include flex_center_row;
-        cursor: pointer;
-
-        &_input {
-          margin-left: 0.75rem;
-          border: 1px solid $primary-border-color;
-        }
-
-        &_icon {
-          margin-left: 0.75rem;
-        }
-
-        &_cancel {
-          margin-left: 0.75rem;
-        }
-      }
     }
   }
 }

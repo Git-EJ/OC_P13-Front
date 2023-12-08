@@ -1,0 +1,50 @@
+.account {
+
+  &_transaction_additional_details {
+      
+    &_container {
+      @include flex_center_column;
+      align-items: flex-start;
+      width: 100%;
+      padding-left: 8%;
+    }
+  
+    &_transaction-type,
+    &_category,
+    &_notes {
+      @include flex_center_row;
+      justify-content: flex-start;
+      width: 100%;
+      
+      &:first-child {
+        margin-top: 1rem;
+      }
+    
+      &:not(:first-child) {
+        margin-top: 0.5rem;
+      }
+    }
+  
+    &_category,
+    &_notes {
+  
+      &_edit {
+        @include flex_center_row;
+        cursor: pointer;
+  
+        &_input {
+          margin-left: 0.75rem;
+          border: 1px solid $primary-border-color;
+        }
+  
+        &_icon {
+          margin-left: 0.75rem;
+        }
+  
+        &_cancel {
+          margin-left: 0.75rem;
+        }
+      }
+    }
+  }
+}
