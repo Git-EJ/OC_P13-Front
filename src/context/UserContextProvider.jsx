@@ -6,13 +6,15 @@ import UserContext from './UserContext'
 const UserContextProvider = ({ children }) => {
  
   const [user, setUser] = useState(null)
+  const [rememberMe, setRememberMe] = useState(null) 
 
   useEffect(() => {
     console.log('%c user contextProvider: ', 'color:pink', user)
-  }, [user])
+    console.log('%c rememberMe contextProvider: ', 'color:pink', rememberMe)
+  }, [user, rememberMe])
 
   return (
-    <UserContext.Provider value={{ setUser, user }}>
+    <UserContext.Provider value={{ setUser, user, setRememberMe, rememberMe }}>
       {children}
     </UserContext.Provider>
   )

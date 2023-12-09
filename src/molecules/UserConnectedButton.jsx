@@ -26,8 +26,9 @@ const UserConnectedButton = () => {
         <CircleUSerIcon />
         {isLoading ? 'Loading...' : firstName}
       </NavLink>
-      {/* TODO logout clear token from localStorage when not remember me*/}
+      {/* TODO logout clear localStorage when not remember me*/}
       <NavLink to="/" className="main-nav-item_contents">
+        
         <ArrowRightFromBracketIcon />
         Sign Out
       </NavLink>

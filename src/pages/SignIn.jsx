@@ -6,20 +6,29 @@ import NotConnectedButton from "../molecules/UserNotConnectedButton";
 import SignInInputs from "../atoms/SignInInputs";
 import Footer from "../atoms/Footer";
 import useAuth from "../api/Auth";
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const SignIn = () => {
-  
-  const { token, message, error, authentificate } = useAuth()
-  console.log('message: ', message)
-  console.log('error: ', error)
 
   const navigate = useNavigate()
-  const [email, setEmail] = useState('') //DEV
-  const [password, setPassword] = useState('') //DEV
+  const { message, error, authentificate } = useAuth()
+
+  const token = useSelector((state) => state.auth.token)
+  const dispatch = useDispatch()
+
+  const [email, setEmail] = useState('steve@rogers.com') //DEV
+  const [password, setPassword] = useState('password456') //DEV
   const [emailMessage, setEmailMessage] = useState('')
   const [passwordMessage, setPasswordMessage] = useState('')
   const [fieldsValid, setFieldsValid] = useState(false)
+
+
+  useEffect(() => {
+    console.log('%c token: ', 'color:lime', token)
+    console.log('%c message: ', 'color:lime', message)
+    console.log('%c error: ', 'color:lime', error)
+  }, [token, message, error])
 
 
   const handleSignInSubmit = useCallback((e) => {
@@ -63,7 +72,6 @@ const SignIn = () => {
 
   useEffect(() => {
     if (token && token.length) {
-      console.log("token: ", token)
       navigate ('/user')
     } else if (error && error.length) {
       navigate ('/error')

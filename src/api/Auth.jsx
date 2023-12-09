@@ -1,10 +1,14 @@
 import { useCallback, useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { clearToken, setToken } from '../rtk/slices/authSlice';
+
+
 
 const useAuth = () => {
   const HOST = 'http://localhost:3001/api/v1/user/';
 
-  const [token, setToken] = useState('')
+  const dispatch = useDispatch()
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
@@ -17,31 +21,30 @@ const useAuth = () => {
       })
 
       console.log('%c resp.data', 'color:green',  loginResponse.data)
-      console.log('%c header: ', 'color: green', loginResponse.headers)
 
-      const result = loginResponse.data.body.token
-      console.log('%c token: ', 'color:lime', result)
+      const token = loginResponse.data.body.token
 
-      if (result && typeof result === 'string' && result.length > 0) {
-        setToken(result)
-        localStorage.setItem('token', result)
+      if (token && typeof token === 'string' && token.length > 0) {
+        dispatch(setToken(token))
+        localStorage.setItem('token', token)
         console.log('%c User FOUND', 'color:lime')
 
       } else {
-        setToken("")
+        dispatch(clearToken())
         setMessage("user not found")
         localStorage.removeItem('token')
       }
+
     } catch (err) {
-      console.log('%c Erreur: ', 'color:red', err)
-      setToken("")
+      dispatch(clearToken())
       setError(err)
       localStorage.removeItem('token')
       localStorage.removeItem('remember-me')
+      console.log('%c Erreur: ', 'color:red', err)
     }
-  }, [setToken, setMessage, setError])
+  }, [dispatch, setMessage, setError])
 
-  return { token, message, error, authentificate }
+  return { message, error, authentificate }
 }
 
 export default useAuth

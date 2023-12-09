@@ -1,5 +1,7 @@
-import { useMemo, useState } from "react"
+import { useContext, useMemo } from "react"
 import PropTypes from 'prop-types'
+import UserContext from "../context/UserContext"
+
 
 const SignInInputs = ({
   email,
@@ -10,10 +12,9 @@ const SignInInputs = ({
   onPasswordChange=()=>{},
 }) => {
   
-  const [checked, setChecked] = useState(() => {
-    const rememberMeValue = localStorage.getItem('remember-me')
-    return rememberMeValue ? !!JSON.parse(rememberMeValue) : !!false
-  })
+  const { rememberMe, setRememberMe } = useContext(UserContext)
+
+  rememberMe ? localStorage.setItem('remember-me', true) : localStorage.setItem('remember-me', false)
 
 
   const arrayOfInputs = useMemo(() => [
@@ -46,14 +47,14 @@ const SignInInputs = ({
       text: "Remember me",
       type: "checkbox",
       id: "remember-me",
-      checked: checked,
+      checked: rememberMe,
       required: false,
       stateUpdater: (e) => {
-        setChecked(e.target.checked)
+        setRememberMe(e.target.checked)
         localStorage.setItem("remember-me", e.target.checked)
       },
     }
-  ], [checked, email, password, onEmailChange, onPasswordChange, validateEmail, validatePassword])
+  ], [rememberMe, setRememberMe, email, password, onEmailChange, onPasswordChange, validateEmail, validatePassword])
   
   return(
     <>
