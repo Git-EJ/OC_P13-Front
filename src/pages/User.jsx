@@ -1,5 +1,5 @@
 import TopBar from "../organisms/TopBar";
-import UserConnectedButton from "../molecules/UserConnectedButton";
+import UserButtons from "../molecules/UserButtons";
 import Footer from "../atoms/Footer";
 import UserAccount from "../molecules/UserAccount";
 
@@ -8,7 +8,7 @@ const User = () => {
   return (
     <>
       <TopBar>
-        <UserConnectedButton />
+        <UserButtons/>
       </TopBar>
 
       <UserAccount />

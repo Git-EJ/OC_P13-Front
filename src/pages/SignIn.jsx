@@ -2,11 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CircleUSerIcon from "../assets/svg/CircleUserIcon";
 import TopBar from "../organisms/TopBar";
-import NotConnectedButton from "../molecules/UserNotConnectedButton";
+import UserButtons from "../molecules/UserButtons";
 import SignInInputs from "../atoms/SignInInputs";
 import Footer from "../atoms/Footer";
 import useAuth from "../api/Auth";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 const SignIn = () => {
@@ -14,8 +14,7 @@ const SignIn = () => {
   const navigate = useNavigate()
   const { message, error, authentificate } = useAuth()
 
-  const token = useSelector((state) => state.auth.token)
-  const dispatch = useDispatch()
+  const token = useSelector(state => state.auth.token) || localStorage.getItem('token')
 
   const [email, setEmail] = useState('steve@rogers.com') //DEV
   const [password, setPassword] = useState('password456') //DEV
@@ -27,7 +26,7 @@ const SignIn = () => {
   useEffect(() => {
     console.log('%c token: ', 'color:lime', token)
     console.log('%c message: ', 'color:lime', message)
-    console.log('%c error: ', 'color:lime', error)
+    console.log('%c signIn - error: ', 'color:lime', error)
   }, [token, message, error])
 
 
@@ -84,7 +83,7 @@ const SignIn = () => {
   return (
     <>
       <TopBar>
-        <NotConnectedButton />
+        <UserButtons />
       </TopBar>
 
       <main className="main bg-dark">

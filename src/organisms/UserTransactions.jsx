@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import TopBar from "./TopBar"
-import UserConnectedButton from "../molecules/UserConnectedButton"
+import UserButtons from "../molecules/UserButtons"
 import Footer from "../atoms/Footer"
 import DropDown from "../molecules/DropDown"
 import ChevronUp from "../assets/svg/ChevronUp"
@@ -141,7 +141,7 @@ const UserTransactions = () => {
   return (
     <>
       <TopBar >
-        <UserConnectedButton />
+        <UserButtons />
       </TopBar>
 
       {arrayOfAccountsTransactions.map((account, index) => (

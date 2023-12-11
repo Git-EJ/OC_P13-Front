@@ -1,6 +1,6 @@
 import Footer from "../atoms/Footer";
 import HomeFeatures from "../atoms/HomeFeatures";
-import NotConnectedButton from "../molecules/UserNotConnectedButton";
+import UserButtons from "../molecules/UserButtons";
 import TopBar from "../organisms/TopBar";
 
 
@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <TopBar>
-        <NotConnectedButton />
+        <UserButtons />
       </TopBar>
 
       <main>
