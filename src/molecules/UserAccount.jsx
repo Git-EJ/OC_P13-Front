@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react"
-import UserContext from "../context/UserContext"
-import useUserProfile from "../api/Profile"
+import { useEffect, useState } from "react"
 import UserEditName from "../atoms/UserEditName"
 import { useNavigate } from "react-router"
+import { useSelector } from "react-redux"
 
 const title = "Argent Bank"
 
@@ -30,33 +29,30 @@ const arrayOfAccounts = [
 
 const UserAccount = () => {
 
-  const { user } = useContext(UserContext)
-  const { profile } = useUserProfile()
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
+  const firstName = useSelector(state => state.auth.userFirstName) || localStorage.getItem('userFirstName')
+  const lastName = useSelector(state => state.auth.userLastName) || localStorage.getItem('userLastName')
   const [isLoading, setIsLoading] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
   const navigate = useNavigate()
 
-  console.log('USER UserAccount ', user)
-  console.log('USER UserAccount F&L: ',firstName, lastName)
-
-
+  console.log('%c firstName: ', 'color:lime', firstName)
+  console.log('%c lastName: ', 'color:lime', lastName)
+  
   useEffect(() => {
-    const fetchUserData = async() => {
-      if (user && user.firstName && user.lastName) {
-        setFirstName(user.firstName)
-        setLastName(user.lastName)
+  }, [firstName, lastName])
+  
+  
+  useEffect(() => {
+    const fetchProfile = async() => {
+      if (firstName && lastName) {
         setIsLoading(false)
       } else {
         setIsLoading(true)
-        await profile()
       }
     }
-
-    fetchUserData()
-  }, [user, profile])
-
+    fetchProfile()
+  }, [firstName, lastName, setIsLoading])
+  
 
   const handleEditName = () => {
     setIsEditing(true)

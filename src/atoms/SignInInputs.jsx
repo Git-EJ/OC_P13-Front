@@ -1,6 +1,7 @@
-import { useContext, useMemo } from "react"
+import { useMemo } from "react"
 import PropTypes from 'prop-types'
-import UserContext from "../context/UserContext"
+import { useDispatch, useSelector } from "react-redux"
+import {setRemember} from "../rtk/slices/authSlice"
 
 
 const SignInInputs = ({
@@ -12,9 +13,11 @@ const SignInInputs = ({
   onPasswordChange=()=>{},
 }) => {
   
-  const { rememberMe, setRememberMe } = useContext(UserContext)
 
-  rememberMe ? localStorage.setItem('remember-me', true) : localStorage.setItem('remember-me', false)
+  const dispatch = useDispatch()
+  const remember = useSelector(state => state.auth.remember)
+
+
 
 
   const arrayOfInputs = useMemo(() => [
@@ -47,14 +50,13 @@ const SignInInputs = ({
       text: "Remember me",
       type: "checkbox",
       id: "remember-me",
-      checked: rememberMe,
+      checked: remember,
       required: false,
       stateUpdater: (e) => {
-        setRememberMe(e.target.checked)
-        localStorage.setItem("remember-me", e.target.checked)
+        dispatch(setRemember(e.target.checked))
       },
     }
-  ], [rememberMe, setRememberMe, email, password, onEmailChange, onPasswordChange, validateEmail, validatePassword])
+  ], [dispatch, remember, email, password, onEmailChange, onPasswordChange, validateEmail, validatePassword])
   
   return(
     <>

@@ -7,14 +7,16 @@ import SignInInputs from "../atoms/SignInInputs";
 import Footer from "../atoms/Footer";
 import useAuth from "../api/Auth";
 import { useSelector } from 'react-redux';
+import useUserProfile from "../api/Profile";
 
 
 const SignIn = () => {
 
   const navigate = useNavigate()
   const { message, error, authentificate } = useAuth()
-
-  const token = useSelector(state => state.auth.token) || localStorage.getItem('token')
+  const { profile } = useUserProfile()
+  
+  const token = useSelector(state => state.auth.token)
 
   const [email, setEmail] = useState('steve@rogers.com') //DEV
   const [password, setPassword] = useState('password456') //DEV
@@ -71,11 +73,12 @@ const SignIn = () => {
 
   useEffect(() => {
     if (token && token.length) {
+      profile()
       navigate ('/user')
     } else if (error && error.length) {
       navigate ('/error')
     }
-  }, [token, error, navigate])
+  }, [token, error, navigate, profile])
 
 
 

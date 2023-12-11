@@ -1,10 +1,15 @@
-import { useContext, useEffect, useState } from "react"
-import UserContext from "../context/UserContext"
+import {useEffect, useState } from "react"
 import PropTypes from 'prop-types'
+import { useSelector } from "react-redux"
+import {setUserFirstName, setUserLastName} from "../rtk/slices/authSlice"
+import { useDispatch } from "react-redux"
 
 
+//TODO REGEX for names
 const UserEditName = ({ setIsEditing }) => {
-  const { user, setUser } = useContext(UserContext)
+  const dispatch = useDispatch()
+  const firstName = useSelector(state => state.auth.userFirstName) || localStorage.getItem('userFirstName')
+  const lastName = useSelector(state => state.auth.userLastName) || localStorage.getItem('userLastName')
   const [editFirstName, setEditFirstName] = useState('')
   const [editLastName, setEditLastName] = useState('')
 
@@ -18,27 +23,28 @@ const UserEditName = ({ setIsEditing }) => {
   }
   
   const handleEditName = () => {
-    setUser({...user, firstName:editFirstName, lastName:editLastName})
+    dispatch(setUserFirstName(editFirstName)) && localStorage.setItem('userFirstName', editFirstName)
+    dispatch(setUserLastName(editLastName)) && localStorage.setItem('userLastName', editLastName)
     setIsEditing(false)
   }
 
   const handleCancelEditName = () => {
-    setEditFirstName(user.firstName)
-    setEditLastName(user.lastName)
+    setEditFirstName(firstName)
+    setEditLastName(lastName)
     setIsEditing(false)
   }
   
   useEffect(() => {
-    setEditFirstName(user.firstName)
-    setEditLastName(user.lastName)
-  }, [user])
+    setEditFirstName(firstName)
+    setEditLastName(lastName)
+  }, [firstName, lastName])
 
 
   return (
     <div className="edit_name_wrapper">
       <div className="edit_name_input_container">
-        <input type="text" className="edit_name_input" onChange={onChangeFirstName} placeholder={user.firstName} />
-        <input type="text" className="edit_name_input" onChange={onChangeLastName} placeholder={user.lastName} />
+        <input type="text" className="edit_name_input" onChange={onChangeFirstName} placeholder={firstName} />
+        <input type="text" className="edit_name_input" onChange={onChangeLastName} placeholder={lastName} />
       </div>
       <div className="edit_name_button_container">
         <button className="edit_name_button" onClick={handleEditName}>Save</button>

@@ -1,21 +1,16 @@
 import axios from 'axios';
-import UserContext from "../context/UserContext";
-import { useContext, useEffect} from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
+import {setUserFirstName, setUserLastName} from '../rtk/slices/authSlice'
 
 
 const useUserProfile = () => {
 
   const HOST = 'http://localhost:3001/api/v1/user/'
-  const { user, setUser } = useContext(UserContext)
-  const token = useSelector(state => state.auth.token) || localStorage.getItem('token')
-  
-  useEffect(() => {
-  console.log('%c USER profile jsx: ', 'color:orange', user)
-  }, [user])
+  const token = useSelector(state => state.auth.token)
+  const dispatch = useDispatch()
 
   const profile = async() => {
-
+    
     try {
       const profileResponse = await axios.post(HOST + 'profile', {}, {
         headers: {
@@ -23,16 +18,22 @@ const useUserProfile = () => {
         }
       })
     
+    
       const { firstName, lastName } = profileResponse.data.body;
-      setUser({ firstName, lastName })
-      // localStorage.setItem('userFirstName', JSON.stringify(firstName)) //TODO good practice for bank app?
-      // localStorage.setItem('userLastName', JSON.stringify(lastName)) //TODO good practice for bank app?
-   
+      
+      console.log('%c firstName: ', 'color:cyan', firstName)
+      console.log('%c lastName: ', 'color:cyan', lastName)
+      
+      dispatch(setUserFirstName(firstName))
+      dispatch(setUserLastName(lastName))
+      
+      
     } catch (err) {
-      console.log('%c Erreur: ', 'color:red', err)
+      console.log('%c Erreur useUserProfile: ', 'color:red', err)
     }
   }
   return { profile }
 }
+
 
 export default useUserProfile;

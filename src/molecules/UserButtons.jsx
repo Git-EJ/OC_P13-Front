@@ -1,45 +1,39 @@
 import { NavLink } from "react-router-dom"
-import { useContext, useEffect, useState } from "react"
-import UserContext from "../context/UserContext"
 import CircleUSerIcon from "../assets/svg/CircleUserIcon"
 import ArrowRightFromBracketIcon from "../assets/svg/ArrowRightFromBracketIcon"
 import { useDispatch, useSelector } from "react-redux"
 import { clearToken } from "../rtk/slices/authSlice"
+import { useEffect, useState } from "react"
 
 
 const UserButtons = () => {
 
   const dispatch = useDispatch()
-  const token = useSelector(state => state.auth.token) || localStorage.getItem('token')
-  const { user, setUser } = useContext(UserContext)
-  const [firstName, setFirstName] = useState(null)
+  const isAuth = useSelector(state => state.auth.isAuth) || localStorage.getItem('isAuth')
+  const firstName = useSelector(state => state.auth.userFirstName) || localStorage.getItem('userFirstName')
   const [isLoading, setIsLoading] = useState(true)
 
 
   useEffect(() => {
-  
-    if (user && user.firstName) {
+    console.log('%c userButtons firstName: ', 'color:lime', firstName)
+    if (firstName) {
       setIsLoading(false)
-      setFirstName(user.firstName)
     } else {
       setIsLoading(true)
     }
-  }, [user, firstName, token, setFirstName, setIsLoading])
-  
+  }, [firstName, isAuth, setIsLoading])
+
 
   const signOut = () => {
     localStorage.clear()
     dispatch(clearToken())
     setIsLoading(false)
-    setUser(null)
-    setFirstName(null)
   }
 
   
-  
   return (
     <>
-      { token ? ( //TODO isAuth????
+      { isAuth ? (
         <div className="main-nav-item_container">
           <NavLink to="/user/" className="main-nav-item_contents">
             <CircleUSerIcon />
