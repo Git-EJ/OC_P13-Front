@@ -1,13 +1,19 @@
 import { RouterProvider } from "react-router-dom"
-import Router from "./router/Router"
+import { useSelector } from "react-redux"
+import isAuthRouter from "./router/Router"
+import publicRouter from "./router/PublicRouter"
 
 
 function App() {
 
+  const isAuth = useSelector(state => state.auth.isAuth) || localStorage.getItem('isAuth')
+
   return (
-  <>
-    <RouterProvider router={ Router }/>
-  </>
+    isAuth ? (
+      <RouterProvider router={ isAuthRouter } />
+    ) : (
+      <RouterProvider router={ publicRouter } />
+    )
   )
 }
 

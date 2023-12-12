@@ -6,7 +6,7 @@ import Error from "../pages/Error";
 import UserTransactions from "../organisms/UserTransactions";
 
 
-const Router = createBrowserRouter([
+const isAuthRouter = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: "/sign-in", element: <SignIn /> },
   { path: "/user", element: <User />},
@@ -15,4 +15,4 @@ const Router = createBrowserRouter([
   { path: "*", element: <Error /> },
 ])
 
-export default Router
+export default isAuthRouter

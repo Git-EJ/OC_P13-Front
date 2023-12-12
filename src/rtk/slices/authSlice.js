@@ -41,8 +41,8 @@ const authSlice = createSlice({
     clearToken(state) {
       state.remember = false
       state.token = null
-      state.setUserFirstname = null
-      state.setUserLastname = null
+      state.setUserFirstName = null
+      state.setUserLastName = null
       state.isAuth = false
       localStorage.removeItem("remember")
       localStorage.removeItem("token")
