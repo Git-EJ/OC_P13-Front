@@ -92,8 +92,9 @@ const SignIn = () => {
       <main className="main bg-dark">
 
         <section className="sign-in-content">
-          <CircleUSerIcon />
-          <h1>Sign In</h1>
+          <div className="sign-in-content_logo"><CircleUSerIcon /></div>
+          
+          <h1 className="sign-in-content_title">Sign In</h1>
 
           <form onSubmit={ handleSignInSubmit }>
             <SignInInputs

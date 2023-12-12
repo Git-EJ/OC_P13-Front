@@ -69,14 +69,14 @@ const UserAccount = () => {
         <div className="header">
           {!isEditing ? (
             <>
-              <h1>Welcome back
+              <h1 className="welcome_text">Welcome back
                 <br />
                 {isLoading ? "Loading..." : `${firstName} ${lastName}!`}
               </h1>
               <button className="edit-button" onClick={handleEditName}>Edit Name</button>
             </>
           ) : (
-            <h1>Welcome back
+            <h1 className="welcome_text">Welcome back
               <br />
               <UserEditName setIsEditing={setIsEditing} />
             </h1>

@@ -255,7 +255,7 @@ body {
 }
 
 .feature-icon {
-  width: 100px;
+  width: 140px;
   border: 10px solid #00BC77;
   border-radius: 50%;
   padding: 1rem;
@@ -267,7 +267,7 @@ body {
 .feature-item-title {
   color: #222;
   font-size: 1.25rem;
-  font-weight: bold;
+  font-weight: 800;
   margin-bottom: 0.5rem;
 }
 
@@ -286,6 +286,7 @@ body {
   border-color: #00BC77;
   background-color: #00BC77;
   color: #fff;
+  text-decoration: underline;
 }
 .sign-in-content {
   box-sizing: border-box;
@@ -294,6 +295,20 @@ body {
   margin: 0 auto;
   margin-top: 3rem;
   padding: 2rem;
+  color: #2c3e50;
+}
+.sign-in-content_logo {
+  margin-bottom: 1rem;
+}
+.sign-in-content_logo svg {
+  width: 25px;
+  height: 25px;
+  fill: #2c3e50;
+}
+.sign-in-content_title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
 }
 
 .input-wrapper {
@@ -325,6 +340,12 @@ body {
 .header {
   color: #fff;
   margin: 1rem 0 2rem 0;
+}
+
+.welcome_text {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
 }
 
 .edit-button {
@@ -459,18 +480,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.2rem;
 }
 .account_header_balance_amount {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.8rem;
+  font-size: 2rem;
 }
 .account_header_balance_available {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.7rem;
+  font-size: 0.9rem;
 }
 .account_transactions_wrapper {
   display: flex;

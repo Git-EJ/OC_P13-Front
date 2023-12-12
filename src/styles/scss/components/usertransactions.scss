@@ -17,16 +17,17 @@
 
     &_title {
       @include flex_center;
+      font-size: 1.2rem;
     }
 
     &_amount {
       @include flex_center;
-      font-size: 1.8rem;
+      font-size: 2rem;
     }
 
     &_available {
       @include flex_center;
-      font-size: 0.7rem;
+      font-size: 0.9rem;
     }
   }
 
