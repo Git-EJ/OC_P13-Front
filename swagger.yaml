@@ -152,7 +152,7 @@ paths:
       security:
         -Bearer: []
       tags:
-        - User adds
+        - User Adds
       summary: User account transactions
       description: API for fetching the different transaction of a user account
       paramaters:
@@ -178,7 +178,7 @@ paths:
       security:
         -Bearer: []
       tags:
-        - User adds
+        - User Adds
       summary: User update transaction details
       description: API for updating the details of a transaction
       parameters:
@@ -262,6 +262,7 @@ definitions:
         type: string
   # START ADDS //////////////////////////////////////////////////////////////////////////:
   UserTransactionDetails:
+    type: object
     properties:
       category:
         type: string
