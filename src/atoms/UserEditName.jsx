@@ -3,15 +3,18 @@ import PropTypes from 'prop-types'
 import { useSelector } from "react-redux"
 import {setUserFirstName, setUserLastName} from "../rtk/slices/authSlice"
 import { useDispatch } from "react-redux"
+import useUserProfile from "../api/Profile"
 
 
 //TODO REGEX for names
-const UserEditName = ({ setIsEditing }) => {
+const UserEditName = ({ setIsEditing, isEditing }) => {
   const dispatch = useDispatch()
   const firstName = useSelector(state => state.auth.userFirstName) || localStorage.getItem('userFirstName')
   const lastName = useSelector(state => state.auth.userLastName) || localStorage.getItem('userLastName')
   const [editFirstName, setEditFirstName] = useState('')
   const [editLastName, setEditLastName] = useState('')
+  const { putProfile } = useUserProfile()
+
 
   
   const onChangeFirstName = (e) => {
@@ -23,10 +26,19 @@ const UserEditName = ({ setIsEditing }) => {
   }
   
   const handleEditName = () => {
-    dispatch(setUserFirstName(editFirstName)) && localStorage.setItem('userFirstName', editFirstName)
-    dispatch(setUserLastName(editLastName)) && localStorage.setItem('userLastName', editLastName)
-    setIsEditing(false)
+    dispatch(setUserFirstName(editFirstName))
+    dispatch(setUserLastName(editLastName)) 
+    localStorage.setItem('userFirstName', editFirstName)
+    localStorage.setItem('userLastName', editLastName)
+    setIsEditing(false) 
+    putProfile()
   }
+
+  // useEffect(() => {
+  //   console.log('%c useAccount/isEditing: ', 'color: pink', isEditing);
+  //   if(!isEditing)
+  //     putProfile()
+  // }, [isEditing, putProfile])
 
   const handleCancelEditName = () => {
     setEditFirstName(firstName)
@@ -39,7 +51,13 @@ const UserEditName = ({ setIsEditing }) => {
     setEditLastName(lastName)
   }, [firstName, lastName])
 
+  useEffect(() => {
+    console.log('%c editFirstName: ', 'color:purple', editFirstName)
+    console.log('%c editLastName: ', 'color:purple', editLastName)
+  }, [editFirstName, editLastName])
 
+
+  
   return (
     <div className="edit_name_wrapper">
       <div className="edit_name_input_container">
@@ -56,6 +74,7 @@ const UserEditName = ({ setIsEditing }) => {
 
 UserEditName.propTypes = {
   setIsEditing: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool.isRequired
 }
 
 export default UserEditName

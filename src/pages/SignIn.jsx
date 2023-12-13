@@ -14,7 +14,7 @@ const SignIn = () => {
 
   const navigate = useNavigate()
   const { message, error, authentificate } = useAuth()
-  const { profile } = useUserProfile()
+  const { postProfile } = useUserProfile()
   
   const token = useSelector(state => state.auth.token)
 
@@ -73,12 +73,12 @@ const SignIn = () => {
 
   useEffect(() => {
     if (token && token.length) {
-      profile()
+      postProfile()
       navigate ('/user')
     } else if (error && error.length) {
       navigate ('/error')
     }
-  }, [token, error, navigate, profile])
+  }, [token, error, navigate, postProfile])
 
 
 

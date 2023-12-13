@@ -35,11 +35,13 @@ const UserAccount = () => {
   const [isEditing, setIsEditing] = useState(false)
   const navigate = useNavigate()
 
-  console.log('%c firstName: ', 'color:lime', firstName)
-  console.log('%c lastName: ', 'color:lime', lastName)
   
   useEffect(() => {
-  }, [firstName, lastName])
+    console.log('%c userAccount/isLoading: ', 'color: lime', isLoading);
+    console.log('%c userAccount/isEditing: ', 'color: lime', isEditing);
+    console.log('%c userAccount/firstName: ', 'color:lime', firstName)
+    console.log('%c userAccount/lastName: ', 'color:lime', lastName)
+  }, [isLoading, isEditing, firstName, lastName])
   
   
   useEffect(() => {
@@ -78,7 +80,7 @@ const UserAccount = () => {
           ) : (
             <h1 className="welcome_text">Welcome back
               <br />
-              <UserEditName setIsEditing={setIsEditing} />
+              <UserEditName setIsEditing={setIsEditing} isEditing={isEditing} />
             </h1>
           )}
         </div>

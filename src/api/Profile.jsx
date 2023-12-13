@@ -9,31 +9,64 @@ const useUserProfile = () => {
   const token = useSelector(state => state.auth.token)
   const dispatch = useDispatch()
 
-  const profile = async() => {
+  //TODO get data from the store not from the localstorage
+  const putFirstName = useSelector(state => state.auth.userFirstName)
+  const putLastName = useSelector(state => state.auth.userLastName)
+  
+  const postProfile = async() => {
     
     try {
-      const profileResponse = await axios.post(HOST + 'profile', {}, {
+      const postProfileResponse = await axios.post(HOST + 'profile', {}, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
-    
-    
-      const { firstName, lastName } = profileResponse.data.body;
+      const { firstName, lastName } = postProfileResponse.data.body;
       
-      console.log('%c firstName: ', 'color:cyan', firstName)
-      console.log('%c lastName: ', 'color:cyan', lastName)
+      console.log('%c postProfile/putFirstName: ', 'color:cyan', putFirstName)
+      console.log('%c postProfile/putLastName: ', 'color:cyan', putLastName)
+      console.log('%c postProfileResponse: ', 'color:cyan', postProfileResponse)
+      console.log('%c postProfile/firstName: ', 'color:cyan', firstName)
+      console.log('%c postProfile/lastName: ', 'color:cyan', lastName)
       
       dispatch(setUserFirstName(firstName))
       dispatch(setUserLastName(lastName))
       
       
     } catch (err) {
-      console.log('%c Erreur useUserProfile: ', 'color:red', err)
+      console.log('%c Erreur useUserProfile/postProfile: ', 'color:red', err)
     }
   }
-  return { profile }
+
+
+  const putProfile = async() => {
+
+    console.log('%c putProfile/putFirstName: ', 'color:orange', putFirstName)
+    console.log('%c putProfile/putLastName: ', 'color:orange', putLastName)
+    
+    try {
+      const requestBody = {
+        firstName: putFirstName,
+        lastName: putLastName
+      }
+    
+      const putProfileResponse = await axios.put(HOST + 'profile', requestBody, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      
+      console.log('%c putProfile/requestBody: ', 'color:orange', requestBody)
+      console.log('%c putProfileResponse.data: ', 'color:orange', putProfileResponse.data)
+      
+    } catch (err) {
+      console.log('%c Erreur useUserProfile/putProfile: ', 'color:red', err)
+    }
+
+  }
+
+  return { postProfile, putProfile }
 }
 
 
-export default useUserProfile;
+export default useUserProfile
