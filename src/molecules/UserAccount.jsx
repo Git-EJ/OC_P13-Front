@@ -80,7 +80,7 @@ const UserAccount = () => {
           ) : (
             <h1 className="welcome_text">Welcome back
               <br />
-              <UserEditName setIsEditing={setIsEditing} isEditing={isEditing} />
+              <UserEditName setIsEditing={setIsEditing} />
             </h1>
           )}
         </div>

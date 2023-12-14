@@ -7,7 +7,7 @@ import useUserProfile from "../api/Profile"
 
 
 //TODO REGEX for names
-const UserEditName = ({ setIsEditing, isEditing }) => {
+const UserEditName = ({ setIsEditing }) => {
   const dispatch = useDispatch()
   const firstName = useSelector(state => state.auth.userFirstName) || localStorage.getItem('userFirstName')
   const lastName = useSelector(state => state.auth.userLastName) || localStorage.getItem('userLastName')
@@ -17,11 +17,11 @@ const UserEditName = ({ setIsEditing, isEditing }) => {
 
 
   
-  const onChangeFirstName = (e) => {
+  const onBlurFirstName = (e) => {
     setEditFirstName(e.target.value)
   }
   
-  const onChangeLastName = (e) => {
+  const onBlurLastName = (e) => {
     setEditLastName(e.target.value)
   }
   
@@ -30,15 +30,15 @@ const UserEditName = ({ setIsEditing, isEditing }) => {
     dispatch(setUserLastName(editLastName)) 
     localStorage.setItem('userFirstName', editFirstName)
     localStorage.setItem('userLastName', editLastName)
-    setIsEditing(false) 
+    setIsEditing(false)
     putProfile()
   }
-
+  
   // useEffect(() => {
-  //   console.log('%c useAccount/isEditing: ', 'color: pink', isEditing);
-  //   if(!isEditing)
-  //     putProfile()
-  // }, [isEditing, putProfile])
+  //   dispatch(setUserFirstName(editFirstName))
+  //   dispatch(setUserLastName(editLastName))
+  //   putProfile()
+  // },[editFirstName, editLastName, dispatch, putProfile])
 
   const handleCancelEditName = () => {
     setEditFirstName(firstName)
@@ -46,23 +46,20 @@ const UserEditName = ({ setIsEditing, isEditing }) => {
     setIsEditing(false)
   }
   
+  // avoid putProfile error when the user modify only one of the two fields(fistName, lastName)
   useEffect(() => {
-    setEditFirstName(firstName)
-    setEditLastName(lastName)
-  }, [firstName, lastName])
-
-  useEffect(() => {
+    editFirstName === '' && setEditFirstName(firstName)
+    editLastName === '' && setEditLastName(lastName)
     console.log('%c editFirstName: ', 'color:purple', editFirstName)
     console.log('%c editLastName: ', 'color:purple', editLastName)
-  }, [editFirstName, editLastName])
-
+  }, [editFirstName, editLastName, firstName, lastName])
 
   
   return (
     <div className="edit_name_wrapper">
       <div className="edit_name_input_container">
-        <input type="text" className="edit_name_input" onChange={onChangeFirstName} placeholder={firstName} />
-        <input type="text" className="edit_name_input" onChange={onChangeLastName} placeholder={lastName} />
+        <input type="text" className="edit_name_input" onBlur={onBlurFirstName} placeholder={firstName} />
+        <input type="text" className="edit_name_input" onBlur={onBlurLastName} placeholder={lastName} />
       </div>
       <div className="edit_name_button_container">
         <button className="edit_name_button" onClick={handleEditName}>Save</button>
@@ -74,7 +71,6 @@ const UserEditName = ({ setIsEditing, isEditing }) => {
 
 UserEditName.propTypes = {
   setIsEditing: PropTypes.func.isRequired,
-  isEditing: PropTypes.bool.isRequired
 }
 
 export default UserEditName
