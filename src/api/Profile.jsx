@@ -7,16 +7,17 @@ import { useEffect } from 'react';
 const useUserProfile = () => {
 
   const HOST = 'http://localhost:3001/api/v1/user/'
-  const token = useSelector(state => state.auth.token)
   const dispatch = useDispatch()
-
-  //TODO get data from the store not from the localstorage
-
+  const token = useSelector(state => state.auth.token)
   const putFirstName = useSelector(state => state.auth.userFirstName) 
   const putLastName = useSelector(state => state.auth.userLastName)
 
-
+  useEffect(() => {
+    console.log('%c useUserProfile/putFirstName: ', 'color: indianRed', putFirstName)
+    console.log('%c useUserProfile/putLastName: ', 'color: indianRed', putLastName)
+  }, [putFirstName, putLastName])
   
+
   const postProfile = async() => {
     
     try {
@@ -42,6 +43,7 @@ const useUserProfile = () => {
     }
   }
 
+  
   const putProfile = async() => {
 
     console.log('%c putProfile/putFirstName: ', 'color:orange', putFirstName)

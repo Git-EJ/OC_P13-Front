@@ -24,7 +24,6 @@ const authSlice = createSlice({
     },
 
     setUserFirstName(state, action) {
-      //TODO no change in localStorage when Editing user
       state.userFirstName = action.payload
       if (state.remember) {
         localStorage.setItem("userFirstName", state.userFirstName)

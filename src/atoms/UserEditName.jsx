@@ -9,12 +9,13 @@ import useUserProfile from "../api/Profile"
 //TODO REGEX for names
 const UserEditName = ({ setIsEditing }) => {
   const dispatch = useDispatch()
+  const { putProfile } = useUserProfile()
+  const remember = useSelector(state => state.auth.remember)
   const firstName = useSelector(state => state.auth.userFirstName) || localStorage.getItem('userFirstName')
   const lastName = useSelector(state => state.auth.userLastName) || localStorage.getItem('userLastName')
   const [editFirstName, setEditFirstName] = useState('')
   const [editLastName, setEditLastName] = useState('')
-  const { putProfile } = useUserProfile()
-
+  const [storeIsUpToDate, setstoreIsUpToDate] = useState(false)
 
   
   const onBlurFirstName = (e) => {
@@ -25,20 +26,26 @@ const UserEditName = ({ setIsEditing }) => {
     setEditLastName(e.target.value)
   }
   
+
+  //TODO refactor conditions
   const handleEditName = () => {
-    dispatch(setUserFirstName(editFirstName))
-    dispatch(setUserLastName(editLastName)) 
-    localStorage.setItem('userFirstName', editFirstName)
-    localStorage.setItem('userLastName', editLastName)
-    setIsEditing(false)
-    putProfile()
+    editFirstName === '' ? setEditFirstName(firstName) : dispatch(setUserFirstName(editFirstName))
+    editLastName === '' ? setEditLastName(lastName) : dispatch(setUserLastName(editLastName))
+    if (remember) {
+      if (editFirstName !== '') localStorage.setItem('userFirstName', editFirstName)
+      if (editLastName !== '') localStorage.setItem('userLastName', editLastName)
+    }
+    setstoreIsUpToDate(true)
   }
   
-  // useEffect(() => {
-  //   dispatch(setUserFirstName(editFirstName))
-  //   dispatch(setUserLastName(editLastName))
-  //   putProfile()
-  // },[editFirstName, editLastName, dispatch, putProfile])
+  useEffect(() => {
+    if (storeIsUpToDate && editFirstName === firstName && editLastName === lastName) {
+      putProfile()
+      setstoreIsUpToDate(false)
+      setIsEditing(false)
+    }
+  },[editFirstName, editLastName, firstName, lastName, storeIsUpToDate, putProfile, setstoreIsUpToDate, setIsEditing])
+
 
   const handleCancelEditName = () => {
     setEditFirstName(firstName)
@@ -46,18 +53,11 @@ const UserEditName = ({ setIsEditing }) => {
     setIsEditing(false)
   }
   
-  // avoid putProfile error when the user modify only one of the two fields(fistName, lastName)
-  useEffect(() => {
-    editFirstName === '' && setEditFirstName(firstName)
-    editLastName === '' && setEditLastName(lastName)
-    console.log('%c editFirstName: ', 'color:purple', editFirstName)
-    console.log('%c editLastName: ', 'color:purple', editLastName)
-  }, [editFirstName, editLastName, firstName, lastName])
 
-  
   return (
     <div className="edit_name_wrapper">
       <div className="edit_name_input_container">
+        {/* TODO placeHolder or defaultValue?? */}
         <input type="text" className="edit_name_input" onBlur={onBlurFirstName} placeholder={firstName} />
         <input type="text" className="edit_name_input" onBlur={onBlurLastName} placeholder={lastName} />
       </div>

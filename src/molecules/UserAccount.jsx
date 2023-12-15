@@ -45,14 +45,7 @@ const UserAccount = () => {
   
   
   useEffect(() => {
-    const fetchProfile = async() => {
-      if (firstName && lastName) {
-        setIsLoading(false)
-      } else {
-        setIsLoading(true)
-      }
-    }
-    fetchProfile()
+   firstName && lastName ? setIsLoading(false) : setIsLoading(true)
   }, [firstName, lastName, setIsLoading])
   
 
