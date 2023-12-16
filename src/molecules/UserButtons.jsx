@@ -3,7 +3,7 @@ import CircleUSerIcon from "../assets/svg/CircleUserIcon"
 import ArrowRightFromBracketIcon from "../assets/svg/ArrowRightFromBracketIcon"
 import { useDispatch, useSelector } from "react-redux"
 import { clearToken } from "../rtk/slices/authSlice"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 
 const UserButtons = () => {
@@ -15,8 +15,8 @@ const UserButtons = () => {
 
 
   useEffect(() => {
-    console.log('%c userButtons firstName: ', 'color:lime', firstName)
-    console.log('%c userButtons isAuth: ', 'color:lime', isAuth)
+    console.log('%c userButtons firstName: ', 'color:orangered', firstName)
+    console.log('%c userButtons isAuth: ', 'color:orangered', isAuth)
     if (firstName) {
       setIsLoading(false)
     } else {
@@ -25,11 +25,11 @@ const UserButtons = () => {
   }, [firstName, isAuth, setIsLoading])
 
 
-  const signOut = () => {
+  const signOut = useCallback(() => {
     localStorage.clear()
     dispatch(clearToken())
     setIsLoading(false)
-  }
+  },[dispatch, setIsLoading])
 
   
   return (

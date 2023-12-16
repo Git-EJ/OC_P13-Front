@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import {setUserFirstName, setUserLastName} from '../rtk/slices/authSlice'
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 
 const useUserProfile = () => {
@@ -18,7 +18,7 @@ const useUserProfile = () => {
   }, [putFirstName, putLastName])
   
 
-  const postProfile = async() => {
+  const postProfile = useCallback(async() => {
     
     try {
       const postProfileResponse = await axios.post(HOST + 'profile', {}, {
@@ -41,10 +41,10 @@ const useUserProfile = () => {
     } catch (err) {
       console.log('%c Erreur useUserProfile/postProfile: ', 'color:red', err)
     }
-  }
+  }, [dispatch, token, putFirstName, putLastName])
 
   
-  const putProfile = async() => {
+  const putProfile = useCallback(async() => {
 
     console.log('%c putProfile/putFirstName: ', 'color:orange', putFirstName)
     console.log('%c putProfile/putLastName: ', 'color:orange', putLastName)
@@ -79,8 +79,7 @@ const useUserProfile = () => {
     } catch (err) {
       console.log('%c Erreur useUserProfile/putProfile: ', 'color:red', err)
     }
-
-  }
+  }, [token, putFirstName, putLastName])
 
   return { postProfile, putProfile }
 }

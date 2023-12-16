@@ -26,14 +26,12 @@ const UserEditName = ({ setIsEditing }) => {
     setEditLastName(e.target.value)
   }
   
-
-  //TODO refactor conditions
   const handleEditName = () => {
     editFirstName === '' ? setEditFirstName(firstName) : dispatch(setUserFirstName(editFirstName))
     editLastName === '' ? setEditLastName(lastName) : dispatch(setUserLastName(editLastName))
     if (remember) {
-      if (editFirstName !== '') localStorage.setItem('userFirstName', editFirstName)
-      if (editLastName !== '') localStorage.setItem('userLastName', editLastName)
+      editFirstName === '' ? localStorage.setItem('userFirstName', firstName) : localStorage.setItem('userFirstName', editFirstName)
+      editLastName === '' ? localStorage.setItem('userLastName', lastName) : localStorage.setItem('userLastName', editLastName)
     }
     setstoreIsUpToDate(true)
   }
