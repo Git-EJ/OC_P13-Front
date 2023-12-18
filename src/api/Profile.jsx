@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import {setUserFirstName, setUserLastName} from '../rtk/slices/authSlice'
 import { useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 
 const useUserProfile = () => {
@@ -11,6 +12,8 @@ const useUserProfile = () => {
   const token = useSelector(state => state.auth.token)
   const putFirstName = useSelector(state => state.auth.userFirstName) 
   const putLastName = useSelector(state => state.auth.userLastName)
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     console.log('%c useUserProfile/putFirstName: ', 'color: indianRed', putFirstName)
@@ -39,9 +42,16 @@ const useUserProfile = () => {
       
       
     } catch (err) {
+      navigate(`/error/${err.response.status}`, { 
+        state: {errorprops: {
+          status: err.response.status,
+          statusText: err.response.statusText, 
+          statusMessage: err.response.data.message
+        }}
+      })
       console.log('%c Erreur useUserProfile/postProfile: ', 'color:red', err)
     }
-  }, [dispatch, token, putFirstName, putLastName])
+  }, [dispatch, token, putFirstName, putLastName, navigate])
 
   
   const putProfile = useCallback(async() => {
@@ -55,6 +65,8 @@ const useUserProfile = () => {
         lastName: putLastName
       }
       
+
+      //TODO handling these errors?
       if (!token) {
         console.log('%c putProfile/!token: ', 'color:red', token)
         return
@@ -77,9 +89,16 @@ const useUserProfile = () => {
       }  
 
     } catch (err) {
+      navigate(`/error/${err.response.status}`, { 
+        state: {errorprops: {
+          status: err.response.status,
+          statusText: err.response.statusText, 
+          statusMessage: err.response.data.message
+        }}
+      })
       console.log('%c Erreur useUserProfile/putProfile: ', 'color:red', err)
     }
-  }, [token, putFirstName, putLastName])
+  }, [token, putFirstName, putLastName, navigate])
 
   return { postProfile, putProfile }
 }
