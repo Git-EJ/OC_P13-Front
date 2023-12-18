@@ -1,0 +1,62 @@
+.error {
+
+  &_container {
+    @include flex_center_column;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  &_code {
+    font-size: 25rem;
+    font-weight: 700;
+    color: $primary-color;
+  }
+
+  &_homebutton {
+    @include flex_center;
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    background-color: $primary-color;
+    color: $font-secondary-color;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+
+  &_text {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: $quaternary-color;
+
+    &:first-of-type {
+      margin-top: 1.2rem;
+    }
+
+    &:not(:first-of-type) {
+      margin-top: 0.2rem;
+    }
+  }
+
+  &_details {
+    @include flex_center_column;
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    background-color: $quaternary-color;
+    color: $font-secondary-color;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: darken($color: $quaternary-color, $amount: 5%);
+    }
+  }
+}
