@@ -10,6 +10,7 @@
     font-size: 25rem;
     font-weight: 700;
     color: $primary-color;
+    animation: errorCode 5s ease-in-out infinite;
   }
 
   &_homebutton {
@@ -22,6 +23,7 @@
     font-size: 1.5rem;
     font-weight: 700;
     text-decoration: none;
+    animation: errorButton 5s ease-in-out infinite;
     transition: all 0.3s ease-in-out;
 
     &:hover {
@@ -48,7 +50,7 @@
     margin-top: 2rem;
     padding: 0.5rem 1rem;
     border-radius: 5px;
-    background-color: $quaternary-color;
+    background-color: $primary-color;
     color: $font-secondary-color;
     font-size: 0.8rem;
     font-weight: 700;
@@ -56,7 +58,43 @@
     transition: all 0.3s ease-in-out;
 
     &:hover {
-      background-color: darken($color: $quaternary-color, $amount: 5%);
+      background-color: darken($color: $primary-color, $amount: 5%);
     }
+  }
+}
+
+
+@keyframes errorCode {
+  0% {
+    transform: rotate(0deg) scale(0.1);
+    color: $primary-color;
+  }
+  25% {
+    transform: rotate(5deg);
+    color: $secondary-color ;
+  }
+  50% {
+    transform: rotate(0deg) scale(1.2);
+    color: $primary-color;
+  }
+  75% {
+    transform: rotate(-5deg);
+    color: $secondary-color;
+  }
+  100% {
+    transform: rotate(0deg) scale(0.1);
+    color: $primary-color;
+  }
+}
+
+@keyframes errorButton {
+  0% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(5deg);
   }
 }

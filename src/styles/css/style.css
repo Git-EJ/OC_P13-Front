@@ -618,6 +618,7 @@ body {
   font-size: 25rem;
   font-weight: 700;
   color: #00BC77;
+  animation: errorCode 5s ease-in-out infinite;
 }
 .error_homebutton {
   display: flex;
@@ -631,6 +632,7 @@ body {
   font-size: 1.5rem;
   font-weight: 700;
   text-decoration: none;
+  animation: errorButton 5s ease-in-out infinite;
   transition: all 0.3s ease-in-out;
 }
 .error_homebutton:hover {
@@ -655,7 +657,7 @@ body {
   margin-top: 2rem;
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  background-color: #2c3e50;
+  background-color: #00BC77;
   color: #fff;
   font-size: 0.8rem;
   font-weight: 700;
@@ -663,7 +665,41 @@ body {
   transition: all 0.3s ease-in-out;
 }
 .error_details:hover {
-  background-color: #233140;
+  background-color: #00a367;
+}
+
+@keyframes errorCode {
+  0% {
+    transform: rotate(0deg) scale(0.1);
+    color: #00BC77;
+  }
+  25% {
+    transform: rotate(5deg);
+    color: #005835;
+  }
+  50% {
+    transform: rotate(0deg) scale(1.2);
+    color: #00BC77;
+  }
+  75% {
+    transform: rotate(-5deg);
+    color: #005835;
+  }
+  100% {
+    transform: rotate(0deg) scale(0.1);
+    color: #00BC77;
+  }
+}
+@keyframes errorButton {
+  0% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(5deg);
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
