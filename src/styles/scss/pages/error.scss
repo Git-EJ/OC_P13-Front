@@ -1,16 +1,18 @@
 .error {
-
+  
   &_container {
     @include flex_center_column;
-    height: 100vh;
     width: 100vw;
+    height: 100vh;
+    background: #00bc77d3;
+    cursor: default;
   }
 
   &_code {
     font-size: 25rem;
     font-weight: 700;
     color: $primary-color;
-    animation: errorCode 5s ease-in-out infinite;
+    animation: errorCode 4s cubic-bezier(0.9, 0.1, 1.0, 1.0) infinite;
   }
 
   &_homebutton {
@@ -56,9 +58,11 @@
     font-weight: 700;
     text-decoration: none;
     transition: all 0.3s ease-in-out;
+    cursor: pointer;
 
     &:hover {
       background-color: darken($color: $primary-color, $amount: 5%);
+      cursor: pointer;
     }
   }
 }
@@ -66,24 +70,21 @@
 
 @keyframes errorCode {
   0% {
-    transform: rotate(0deg) scale(0.1);
+    transform: scale(0.01);
+    color: $primary-color; 
+    opacity: 1;
+  }
+  8% {
+    transform: scale(1.7);
     color: $primary-color;
+    opacity: 1;
   }
-  25% {
-    transform: rotate(5deg);
-    color: $secondary-color ;
-  }
-  50% {
-    transform: rotate(0deg) scale(1.2);
-    color: $primary-color;
-  }
-  75% {
-    transform: rotate(-5deg);
+  10% {
     color: $secondary-color;
   }
   100% {
-    transform: rotate(0deg) scale(0.1);
-    color: $primary-color;
+    transform: scale(0.01);
+    opacity: 0.1;
   }
 }
 
@@ -98,3 +99,5 @@
     transform: rotate(5deg);
   }
 }
+
+

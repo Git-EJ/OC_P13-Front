@@ -55,7 +55,6 @@ const UserEditName = ({ setIsEditing }) => {
   return (
     <div className="edit_name_wrapper">
       <div className="edit_name_input_container">
-        {/* TODO placeHolder or defaultValue?? */}
         <input type="text" className="edit_name_input" onBlur={onBlurFirstName} placeholder={firstName} />
         <input type="text" className="edit_name_input" onBlur={onBlurLastName} placeholder={lastName} />
       </div>

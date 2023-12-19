@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import CircleUSerIcon from "../assets/svg/CircleUserIcon"
 import ArrowRightFromBracketIcon from "../assets/svg/ArrowRightFromBracketIcon"
 import { useDispatch, useSelector } from "react-redux"
@@ -12,6 +12,7 @@ const UserButtons = () => {
   const isAuth = useSelector(state => state.auth.isAuth) || localStorage.getItem('isAuth')
   const firstName = useSelector(state => state.auth.userFirstName) || localStorage.getItem('userFirstName')
   const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -29,7 +30,8 @@ const UserButtons = () => {
     localStorage.clear()
     dispatch(clearToken())
     setIsLoading(false)
-  },[dispatch, setIsLoading])
+    navigate ('/')
+  },[dispatch, setIsLoading, navigate])
 
   
   return (
@@ -41,10 +43,10 @@ const UserButtons = () => {
             {isLoading ? 'Loading...' : firstName}
           </NavLink>
 
-          <NavLink to="/" className="main-nav-item_contents" onClick={signOut}>
+          <div className="main-nav-item_contents" onClick={signOut}>
             <ArrowRightFromBracketIcon />
             Sign Out
-          </NavLink>
+          </div>
         </div>
 
       ) : (

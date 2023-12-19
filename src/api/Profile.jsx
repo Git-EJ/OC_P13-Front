@@ -64,29 +64,15 @@ const useUserProfile = () => {
         firstName: putFirstName,
         lastName: putLastName
       }
-      
 
-      //TODO handling these errors?
-      if (!token) {
-        console.log('%c putProfile/!token: ', 'color:red', token)
-        return
-      } else if (!requestBody.firstName) {
-        console.log('%c putProfile/!requestBody.firstName: ', 'color:red', requestBody.firstName)
-        return
-      }else if (!requestBody.lastName) {
-        console.log('%c putProfile/!requestBody.lastName: ', 'color:red', requestBody.lastName)
-        return
-
-      } else {
-        const putProfileResponse = await axios.put(HOST + 'profile', requestBody, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        })
+      const putProfileResponse = await axios.put(HOST + 'profile', requestBody, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
         
-        console.log('%c putProfile/requestBody: ', 'color:orange', requestBody)
-        console.log('%c putProfileResponse.data: ', 'color:orange', putProfileResponse.data)
-      }  
+      console.log('%c putProfile/requestBody: ', 'color:orange', requestBody)
+      console.log('%c putProfileResponse.data: ', 'color:orange', putProfileResponse.data) 
 
     } catch (err) {
       navigate(`/error/${err.response.status}`, { 

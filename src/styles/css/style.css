@@ -168,6 +168,7 @@ body {
   align-items: center;
   text-decoration: none;
   margin-right: 0.5rem;
+  font-weight: 700;
 }
 .main-nav-item_contents svg {
   margin-right: 0.25rem;
@@ -611,14 +612,16 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
   width: 100vw;
+  height: 100vh;
+  background: rgba(0, 188, 119, 0.8274509804);
+  cursor: default;
 }
 .error_code {
   font-size: 25rem;
   font-weight: 700;
   color: #00BC77;
-  animation: errorCode 5s ease-in-out infinite;
+  animation: errorCode 4s cubic-bezier(0.9, 0.1, 1, 1) infinite;
 }
 .error_homebutton {
   display: flex;
@@ -663,31 +666,30 @@ body {
   font-weight: 700;
   text-decoration: none;
   transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
 .error_details:hover {
   background-color: #00a367;
+  cursor: pointer;
 }
 
 @keyframes errorCode {
   0% {
-    transform: rotate(0deg) scale(0.1);
+    transform: scale(0.01);
     color: #00BC77;
+    opacity: 1;
   }
-  25% {
-    transform: rotate(5deg);
-    color: #005835;
-  }
-  50% {
-    transform: rotate(0deg) scale(1.2);
+  8% {
+    transform: scale(1.7);
     color: #00BC77;
+    opacity: 1;
   }
-  75% {
-    transform: rotate(-5deg);
+  10% {
     color: #005835;
   }
   100% {
-    transform: rotate(0deg) scale(0.1);
-    color: #00BC77;
+    transform: scale(0.01);
+    opacity: 0.1;
   }
 }
 @keyframes errorButton {

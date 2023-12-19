@@ -102,8 +102,8 @@ const UserTransactions = () => {
     const format = { year: 'numeric', month: 'long', day: '2-digit' }
     return new Date(date).toLocaleDateString('en-US', format)
   }
-  
-  //TODO : need it or last transaction balance?????
+
+
   const accountBalance = arrayOfSortedTransactions.reduce((acc, transaction) => {
     if (transaction.type === "Deposit") {
       return acc + transaction.amount
@@ -112,17 +112,12 @@ const UserTransactions = () => {
     }
   }, oldBalanceAmount)
   
-  
-  //TODO : better way to dit than .unshift ????
-  const calculateAfterTransactionBalance = () => {
 
-    const balances = []
-    for (let i = arrayOfSortedTransactions.length - 1; i >= 0; i--) {
-      const transaction = arrayOfSortedTransactions[i]
+  const calculateAfterTransactionBalance = () => {
+    return ([...arrayOfSortedTransactions].reverse()).map((transaction) => {
       transaction.type === "Deposit" ? (oldBalanceAmount += transaction.amount) : (oldBalanceAmount -= transaction.amount)
-      balances.unshift(oldBalanceAmount)
-    }
-    return balances
+      return oldBalanceAmount
+    }).reverse()
   }
   const transactionBalance = calculateAfterTransactionBalance()
 
