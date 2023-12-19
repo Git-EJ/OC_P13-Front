@@ -10,13 +10,13 @@ const authSlice = createSlice({
   },
   reducers: {
     setRemember(state, action) {
-      state.remember = action.payload ? true : false;
+      state.remember = action.payload ? true : false
       localStorage.setItem("remember", state.remember)
     },
 
     setToken(state, action) {
-      state.token = action.payload;
-      state.isAuth = true;
+      state.token = action.payload
+      state.isAuth = true
       if (state.remember) {
         localStorage.setItem("token", state.token)
         localStorage.setItem("isAuth", state.isAuth)
