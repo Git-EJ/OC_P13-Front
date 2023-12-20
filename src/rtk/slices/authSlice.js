@@ -4,9 +4,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    token: null,
-    isAuth: false,
-    remember: false,
+    token: localStorage.getItem("token") || null,
+    isAuth: !!localStorage.getItem("isAuth"),
+    remember: !!localStorage.getItem("remember"),
   },
   reducers: {
     setRemember(state, action) {
@@ -38,22 +38,25 @@ const authSlice = createSlice({
     },
 
     clearToken(state) {
-      state.remember = false
       state.token = null
       state.setUserFirstName = null
       state.setUserLastName = null
       state.isAuth = false
-      localStorage.removeItem("remember")
       localStorage.removeItem("token")
       localStorage.removeItem("isAuth")
       localStorage.removeItem("userFirstName")
       localStorage.removeItem("userLastName")
+    },
+
+    clearRemember(state) {
+      state.remember = false
+      localStorage.removeItem("remember")
     },
   },
 });
 
 
 
-export const { setRemember, setUserFirstName, setUserLastName, setToken, clearToken } = authSlice.actions;
+export const { setRemember, setUserFirstName, setUserLastName, setToken, clearToken, clearRemember } = authSlice.actions;
 export default authSlice.reducer;
 

@@ -16,25 +16,26 @@ const SignIn = () => {
   const { message, error, authentificate } = useAuth()
   const { postProfile } = useUserProfile()
   
-  const token = useSelector(state => state.auth.token)
-
-  const [email, setEmail] = useState('steve@rogers.com') //DEV
-  const [password, setPassword] = useState('password456') //DEV
+  const [email, setEmail] = useState(process.env.NODE_ENV === 'development' ? 'tony@stark.com' : '') //DEV
+  const [password, setPassword] = useState(process.env.NODE_ENV === 'development' ? 'password123' : '') //DEV
   const [emailMessage, setEmailMessage] = useState('')
   const [passwordMessage, setPasswordMessage] = useState('')
   const [fieldsValid, setFieldsValid] = useState(false)
 
+
+  const token = useSelector(state => state.auth.token)
 
   useEffect(() => {
     console.log('%c token: ', 'color:lime', token)
     console.log('%c message: ', 'color:lime', message)
     console.log('%c signIn - error: ', 'color:lime', error)
   }, [token, message, error])
-
-
+  
+  
   const handleSignInSubmit = useCallback((e) => {
     e.preventDefault();
     console.log("Form submitted");
+
     authentificate({email: email, password: password})
   }, [authentificate, email, password])
 

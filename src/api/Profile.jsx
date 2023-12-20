@@ -9,16 +9,18 @@ const useUserProfile = () => {
 
   const HOST = 'http://localhost:3001/api/v1/user/'
   const dispatch = useDispatch()
-  const token = useSelector(state => state.auth.token)
+  
   const putFirstName = useSelector(state => state.auth.userFirstName) 
   const putLastName = useSelector(state => state.auth.userLastName)
   const navigate = useNavigate()
 
+  const token = useSelector(state => state.auth.token)
 
   useEffect(() => {
     console.log('%c useUserProfile/putFirstName: ', 'color: indianRed', putFirstName)
     console.log('%c useUserProfile/putLastName: ', 'color: indianRed', putLastName)
-  }, [putFirstName, putLastName])
+    console.log('%c useUserProfile/token: ', 'color: indianRed', token)
+  }, [putFirstName, putLastName, token])
   
 
   const postProfile = useCallback(async() => {

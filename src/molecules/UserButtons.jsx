@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import CircleUSerIcon from "../assets/svg/CircleUserIcon"
 import ArrowRightFromBracketIcon from "../assets/svg/ArrowRightFromBracketIcon"
 import { useDispatch, useSelector } from "react-redux"
-import { clearToken } from "../rtk/slices/authSlice"
+import { clearRemember, clearToken } from "../rtk/slices/authSlice"
 import { useCallback, useEffect, useState } from "react"
 
 
@@ -29,6 +29,7 @@ const UserButtons = () => {
   const signOut = useCallback(() => {
     localStorage.clear()
     dispatch(clearToken())
+    dispatch(clearRemember())
     setIsLoading(false)
     navigate ('/')
   },[dispatch, setIsLoading, navigate])

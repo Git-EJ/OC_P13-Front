@@ -413,6 +413,10 @@ body {
     width: 200px;
   }
 }
+input[type=text] {
+  padding: 0.5rem;
+}
+
 .edit_name_wrapper {
   display: flex;
   justify-content: center;
@@ -436,7 +440,6 @@ body {
 .edit_name_input::placeholder {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   color: #C3CFD9;
-  padding: 0 0.5rem;
 }
 .edit_name_input:first-child {
   margin-right: 1rem;

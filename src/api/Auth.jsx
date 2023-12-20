@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { clearToken, setToken } from '../rtk/slices/authSlice';

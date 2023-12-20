@@ -1,3 +1,8 @@
+input[type="text"] {
+  padding: 0.5rem;
+}
+
+
 .edit_name {
   &_wrapper {
     @include flex_center_column;
@@ -18,7 +23,6 @@
     &::placeholder {
       font-family: $font;
       color: $placeholder-font-color;
-      padding: 0 0.5rem;
     }
 
     &:first-child {
