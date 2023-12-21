@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import {setUserFirstName, setUserLastName} from '../rtk/slices/authSlice'
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 
 
@@ -16,12 +16,6 @@ const useUserProfile = () => {
 
   const token = useSelector(state => state.auth.token)
 
-  useEffect(() => {
-    console.log('%c useUserProfile/putFirstName: ', 'color: indianRed', putFirstName)
-    console.log('%c useUserProfile/putLastName: ', 'color: indianRed', putLastName)
-    console.log('%c useUserProfile/token: ', 'color: indianRed', token)
-  }, [putFirstName, putLastName, token])
-  
 
   const postProfile = useCallback(async() => {
     
@@ -33,15 +27,8 @@ const useUserProfile = () => {
       })
       const { firstName, lastName } = postProfileResponse.data.body;
       
-      console.log('%c postProfile/putFirstName: ', 'color:cyan', putFirstName)
-      console.log('%c postProfile/putLastName: ', 'color:cyan', putLastName)
-      console.log('%c postProfileResponse: ', 'color:cyan', postProfileResponse)
-      console.log('%c postProfile/firstName: ', 'color:cyan', firstName)
-      console.log('%c postProfile/lastName: ', 'color:cyan', lastName)
-      
       dispatch(setUserFirstName(firstName))
       dispatch(setUserLastName(lastName))
-      
       
     } catch (err) {
       navigate(`/error/${err.response.status}`, { 
@@ -53,28 +40,23 @@ const useUserProfile = () => {
       })
       console.log('%c Erreur useUserProfile/postProfile: ', 'color:red', err)
     }
-  }, [dispatch, token, putFirstName, putLastName, navigate])
+  }, [dispatch, token, navigate])
 
   
   const putProfile = useCallback(async() => {
 
-    console.log('%c putProfile/putFirstName: ', 'color:orange', putFirstName)
-    console.log('%c putProfile/putLastName: ', 'color:orange', putLastName)
-    
     try {
       const requestBody = {
         firstName: putFirstName,
         lastName: putLastName
       }
 
-      const putProfileResponse = await axios.put(HOST + 'profile', requestBody, {
+      await axios.put(HOST + 'profile', requestBody, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
         
-      console.log('%c putProfile/requestBody: ', 'color:orange', requestBody)
-      console.log('%c putProfileResponse.data: ', 'color:orange', putProfileResponse.data) 
 
     } catch (err) {
       navigate(`/error/${err.response.status}`, { 

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react"
+import { useMemo } from "react"
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux"
 import {setRemember} from "../rtk/slices/authSlice"
@@ -16,11 +16,6 @@ const SignInInputs = ({
 
   const dispatch = useDispatch()
   const remember = useSelector(state => state.auth.remember)
-
-  useEffect(() => {
-    console.log('%c SignInInputs remember: ', 'color:lime', remember)
-  }, [remember])
-
 
 
   const arrayOfInputs = useMemo(() => [

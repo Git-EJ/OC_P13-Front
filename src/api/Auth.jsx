@@ -13,14 +13,13 @@ const useAuth = () => {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
+
   const authentificate = useCallback(async({ email="", password="" }) => {
     try {
       const loginResponse = await axios.post(HOST + 'login', {
         email: email,
         password: password,
       })
-      console.log('%c resp.data', 'color:green',  loginResponse.data)
-
 
       const token = loginResponse.data.body.token
 
@@ -45,7 +44,6 @@ const useAuth = () => {
           statusMessage: err.response.data.message
         }}
       })
-
       console.log('%c Auth-erreur: ', 'color:red', err)
     }
   }, [dispatch, navigate])

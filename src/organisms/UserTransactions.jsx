@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import TopBar from "./TopBar"
 import UserButtons from "../molecules/UserButtons"
 import Footer from "../atoms/Footer"
@@ -123,15 +123,14 @@ const UserTransactions = () => {
 
   
   const [isOpenIndex, setIsOpenIndex] = useState(Array(arrayOfSortedTransactions.length).fill(false))
-  useEffect(() => {
-    console.log('isOpenIndex:', isOpenIndex)
-  }, [isOpenIndex])
+
 
   const clickChevron = (index) => {
     const newIsOpenIndex = [...isOpenIndex]
     newIsOpenIndex[index] = !newIsOpenIndex[index]
     setIsOpenIndex(newIsOpenIndex)
   }
+
 
   return (
     <>

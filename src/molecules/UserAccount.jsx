@@ -37,14 +37,6 @@ const UserAccount = () => {
 
   
   useEffect(() => {
-    console.log('%c userAccount/isLoading: ', 'color: lime', isLoading);
-    console.log('%c userAccount/isEditing: ', 'color: lime', isEditing);
-    console.log('%c userAccount/firstName: ', 'color:lime', firstName)
-    console.log('%c userAccount/lastName: ', 'color:lime', lastName)
-  }, [isLoading, isEditing, firstName, lastName])
-  
-  
-  useEffect(() => {
    firstName && lastName ? setIsLoading(false) : setIsLoading(true)
   }, [firstName, lastName, setIsLoading])
   

@@ -13,7 +13,7 @@ import useUserProfile from "../api/Profile";
 const SignIn = () => {
 
   const navigate = useNavigate()
-  const { message, error, authentificate } = useAuth()
+  const { error, authentificate } = useAuth()
   const { postProfile } = useUserProfile()
   
   const [email, setEmail] = useState(process.env.NODE_ENV === 'development' ? 'tony@stark.com' : '') //DEV
@@ -24,17 +24,10 @@ const SignIn = () => {
 
 
   const token = useSelector(state => state.auth.token)
-
-  useEffect(() => {
-    console.log('%c token: ', 'color:lime', token)
-    console.log('%c message: ', 'color:lime', message)
-    console.log('%c signIn - error: ', 'color:lime', error)
-  }, [token, message, error])
   
   
   const handleSignInSubmit = useCallback((e) => {
     e.preventDefault();
-    console.log("Form submitted");
 
     authentificate({email: email, password: password})
   }, [authentificate, email, password])
@@ -42,7 +35,7 @@ const SignIn = () => {
 
   const validateEmail = useCallback((email) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+(?<!\.{2})\.[a-zA-Z]{2,}$/
-    console.log(email);
+
     if (!emailPattern.test(email)) {
       setEmailMessage("Caractère(s) non autoris(é) et/ou format email incorrect")
     } else {
@@ -54,6 +47,7 @@ const SignIn = () => {
 
   const validatePassword = useCallback((password) => {
     const passwordPattern = /^[a-zA-Z0-9-_#*@&]*$/
+
     if (!passwordPattern.test(password)) {
     setPasswordMessage("Caractère(s) non autorisé(s), autorisé(s): -_#*@&")
     } else {

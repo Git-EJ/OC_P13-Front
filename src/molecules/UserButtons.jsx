@@ -16,8 +16,6 @@ const UserButtons = () => {
 
 
   useEffect(() => {
-    console.log('%c userButtons firstName: ', 'color:orangered', firstName)
-    console.log('%c userButtons isAuth: ', 'color:orangered', isAuth)
     if (firstName) {
       setIsLoading(false)
     } else {
