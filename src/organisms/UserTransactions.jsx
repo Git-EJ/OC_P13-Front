@@ -6,85 +6,86 @@ import DropDown from "../molecules/DropDown"
 import ChevronUp from "../assets/svg/ChevronUp"
 import ChevronDown from "../assets/svg/ChevronDown"
 
+
 const arrayOfAccountsTransactions = [
   {
     accountNumber: "x1234",
 
     arrayOfTransactions: [
       {
-        date: '2020-01-01', 
-        type: 'Deposit',
-        amount: 100, 
-        description: 'OC Salary',
+        date: "2020-01-01",
+        type: "Deposit",
+        amount: 100,
+        description: "OC Salary",
 
-        additionalDetails:{
+        additionalDetails: {
           transactionType: "bank transfer",
           category: "salary",
-          notes:"",
-        }
+          notes: "",
+        },
       },
       {
-        date: '2021-01-03',
-        type: 'Withdrawal',
+        date: "2021-01-03",
+        type: "Withdrawal",
         amount: 50.23,
-        description: 'Groceries Open till late',
+        description: "Groceries Open till late",
 
-        additionalDetails:{
+        additionalDetails: {
           transactionType: "Credit card purchase",
           category: "food and drink",
-          notes:"",
-        }
+          notes: "",
+        },
       },
       {
-        date: '2020-01-02',
-        type: 'Deposit',
+        date: "2020-01-02",
+        type: "Deposit",
         amount: 500,
-        description: 'Cash deposit',
+        description: "Cash deposit",
 
-        additionalDetails:{
+        additionalDetails: {
           transactionType: "Customer cash deposit",
           category: "cash deposit",
-          notes:"",
-        }
+          notes: "",
+        },
       },
       {
-        date: '2022-10-01',
-        type: 'Withdrawal',
+        date: "2022-10-01",
+        type: "Withdrawal",
         amount: 1000.99,
-        description: 'OMG Computer',
+        description: "OMG Computer",
 
-        additionalDetails:{
+        additionalDetails: {
           transactionType: "Credit card purchase",
           category: "electronics",
-          notes:"",
-        }
+          notes: "",
+        },
       },
       {
-        date: '2021-06-03',
-        type: 'Deposit',
+        date: "2021-06-03",
+        type: "Deposit",
         amount: 300,
-        description: 'Refund from Amazon for order 1234567890',
+        description: "Refund from Amazon for order 1234567890",
 
-        additionalDetails:{
+        additionalDetails: {
           transactionType: "bank transfer",
           category: "refund",
-          notes:"",
-        }
+          notes: "",
+        },
       },
       {
-        date: '2022-07-25',
-        type: 'Withdrawal',
+        date: "2022-07-25",
+        type: "Withdrawal",
         amount: 800,
-        description: 'Holiday to Avignon',
-        additionalDetails:{
+        description: "Holiday to Avignon",
+        additionalDetails: {
           transactionType: "bank transfer",
           category: "travel",
-          notes:"",
-        }
+          notes: "",
+        },
       },
-    ]
-  }
-]
+    ],
+  },
+];
 
 
 
@@ -97,6 +98,7 @@ const UserTransactions = () => {
     return allTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
   }
   const arrayOfSortedTransactions = sortedTransactionsByDate()
+  
   
   const formatDate = (date) => {
     const format = { year: 'numeric', month: 'long', day: '2-digit' }

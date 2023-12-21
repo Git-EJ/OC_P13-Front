@@ -3,7 +3,6 @@ import HomeFeatures from "../atoms/HomeFeatures";
 import UserButtons from "../molecules/UserButtons";
 import TopBar from "../organisms/TopBar";
 
-
 const Home = () => {
   return (
     <>

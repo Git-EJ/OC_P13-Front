@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import Pencil from '../assets/svg/Pencil'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Xmark from '../assets/svg/Xmark'
 
 

@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react"
-import UserEditName from "../atoms/UserEditName"
-import { useNavigate } from "react-router"
-import { useSelector } from "react-redux"
+import { useEffect, useState } from "react";
+import UserEditName from "../atoms/UserEditName";
+import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
-const title = "Argent Bank"
+
+const title = "Argent Bank";
+
 
 const arrayOfAccounts = [
-  
   {
     type: "Checking",
     number: "(x8349)",
@@ -24,70 +25,83 @@ const arrayOfAccounts = [
     number: "(x8349)",
     amount: "$184.30",
     amountDescription: "Current Balance",
-  }
-]
+  },
+];
+
 
 const UserAccount = () => {
+  const firstName = useSelector((state) => state.auth.userFirstName) || localStorage.getItem("userFirstName");
+  const lastName = useSelector((state) => state.auth.userLastName) || localStorage.getItem("userLastName");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
 
-  const firstName = useSelector(state => state.auth.userFirstName) || localStorage.getItem('userFirstName')
-  const lastName = useSelector(state => state.auth.userLastName) || localStorage.getItem('userLastName')
-  const [isLoading, setIsLoading] = useState(true)
-  const [isEditing, setIsEditing] = useState(false)
-  const navigate = useNavigate()
 
-  
   useEffect(() => {
-   firstName && lastName ? setIsLoading(false) : setIsLoading(true)
-  }, [firstName, lastName, setIsLoading])
-  
+    firstName && lastName ? setIsLoading(false) : setIsLoading(true);
+  }, [firstName, lastName, setIsLoading]);
+
 
   const handleEditName = () => {
-    setIsEditing(true)
-  }
+    setIsEditing(true);
+  };
+
 
   const handleClickTransactions = () => {
-    navigate('/user/transactions')
-  }
+    navigate("/user/transactions");
+  };
+
   
-
   return (
-
     <main className="main bg-dark">
-        <div className="header">
-          {!isEditing ? (
-            <>
-              <h1 className="welcome_text">Welcome back
-                <br />
-                {isLoading ? "Loading..." : `${firstName} ${lastName}!`}
-              </h1>
-              <button className="edit-button" onClick={handleEditName}>Edit Name</button>
-            </>
-          ) : (
-            <h1 className="welcome_text">Welcome back
+      <div className="header">
+        {!isEditing ? (
+          <>
+            <h1 className="welcome_text">
+              Welcome back
               <br />
-              <UserEditName setIsEditing={setIsEditing} />
+              {isLoading ? "Loading..." : `${firstName} ${lastName}!`}
             </h1>
-          )}
-        </div>
+            <button className="edit-button" onClick={handleEditName}>
+              Edit Name
+            </button>
+          </>
+        ) : (
+          <h1 className="welcome_text">
+            Welcome back
+            <br />
+            <UserEditName setIsEditing={setIsEditing} />
+          </h1>
+        )}
+      </div>
 
-        <h2 className="sr-only">Accounts</h2>
+      <h2 className="sr-only">Accounts</h2>
 
-        {arrayOfAccounts.map((account, index) => {
-          return (
-            <section className="account" key={`account${index}`}>
-              <div className="account-content-wrapper">
-                <h3 className="account-title">{title} {account.type} {account.number}</h3>
-                <p className="account-amount">{account.amount}</p>
-                <p className="account-amount-description">{account.amountDescription}</p>
-              </div>
-              <div className="account-content-wrapper cta">
-                <button className="transaction-button" onClick={handleClickTransactions}>View transactions</button>
-              </div>
-            </section>
-          )
-        })}
+      {arrayOfAccounts.map((account, index) => {
+        return (
+          <section className="account" key={`account${index}`}>
+            <div className="account-content-wrapper">
+              <h3 className="account-title">
+                {title} {account.type} {account.number}
+              </h3>
+              <p className="account-amount">{account.amount}</p>
+              <p className="account-amount-description">
+                {account.amountDescription}
+              </p>
+            </div>
+            <div className="account-content-wrapper cta">
+              <button
+                className="transaction-button"
+                onClick={handleClickTransactions}
+              >
+                View transactions
+              </button>
+            </div>
+          </section>
+        );
+      })}
     </main>
-  )
-}
+  );
+};
 
-export default UserAccount
+export default UserAccount;

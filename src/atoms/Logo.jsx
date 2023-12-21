@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 
-
 const Logo = () => {
   return (
     <NavLink to="/" className="main-nav-logo_container">
@@ -9,6 +8,6 @@ const Logo = () => {
       <h1 className="sr-only">Argent Bank</h1>
     </NavLink>
   );
-}
+};
 
 export default Logo;
