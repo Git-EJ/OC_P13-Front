@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
+const firstLetterUpperCase = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase().trim()
+}
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -24,19 +28,19 @@ const authSlice = createSlice({
     },
 
     setUserFirstName(state, action) {
-      state.userFirstName = action.payload
+      state.userFirstName = firstLetterUpperCase(action.payload)
       if (state.remember) {
         localStorage.setItem("userFirstName", state.userFirstName)
       }
     },
 
     setUserLastName(state, action) {
-      state.userLastName = action.payload
+      state.userLastName = firstLetterUpperCase(action.payload)
       if (state.remember) {
         localStorage.setItem("userLastName", state.userLastName)
       }
     },
-
+ 
     clearToken(state) {
       state.token = null
       state.setUserFirstName = null

@@ -1,58 +1,62 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
 import { setUserFirstName, setUserLastName } from "../rtk/slices/authSlice";
-import { useDispatch } from "react-redux";
 import useUserProfile from "../api/Profile";
 
-//TODO REGEX for names
+
 const UserEditName = ({ setIsEditing }) => {
  
   const dispatch = useDispatch();
   const { putProfile } = useUserProfile();
   const remember = useSelector((state) => state.auth.remember);
-  const firstName = useSelector((state) => state.auth.userFirstName) || localStorage.getItem("userFirstName");
-  const lastName = useSelector((state) => state.auth.userLastName) || localStorage.getItem("userLastName");
+  const firstName = useSelector((state) => (state.auth.userFirstName) || localStorage.getItem("userFirstName"));
+  const lastName = useSelector((state) => (state.auth.userLastName) || localStorage.getItem("userLastName"));
   const [editFirstName, setEditFirstName] = useState("");
   const [editLastName, setEditLastName] = useState("");
   const [storeIsUpToDate, setstoreIsUpToDate] = useState(false);
+  const [regexError, setRegexError] = useState(false);
 
 
-  const onBlurFirstName = (e) => {
-    setEditFirstName(e.target.value);
-  };
+  const isValidInput = useCallback((e) => {
+
+    const editNamePattern = /^[a-zA-Z éèçùï-]+$/;
+
+    if (!editNamePattern.test(e.target.value)) {
+      setRegexError("Caractère(s) non autorisé(s), autorisé(s): a-z A-Z é è ç ù ï");
+
+    } else if(e.target.value.length > 30) {
+      setRegexError("Nombre de caractères maximum: 30");
+
+    } else {
+      setRegexError("");
+
+      if(e.target.id === "editFirstName"){
+        setEditFirstName(e.target.value);
+      } else if(e.target.id === "editLastName"){
+        setEditLastName(e.target.value);
+      }
+    }
+  },[setRegexError, setEditFirstName, setEditLastName]);
 
 
-  const onBlurLastName = (e) => {
-    setEditLastName(e.target.value);
-  };
-
-
-  const handleEditName = () => {
+  const handleEditName = useCallback (() => {
+    
     editFirstName === ""
       ? setEditFirstName(firstName)
       : dispatch(setUserFirstName(editFirstName));
+
     editLastName === ""
       ? setEditLastName(lastName)
       : dispatch(setUserLastName(editLastName));
-    if (remember) {
-      editFirstName === ""
-        ? localStorage.setItem("userFirstName", firstName)
-        : localStorage.setItem("userFirstName", editFirstName);
-      editLastName === ""
-        ? localStorage.setItem("userLastName", lastName)
-        : localStorage.setItem("userLastName", editLastName);
-    }
+
+    setIsEditing(false);
     setstoreIsUpToDate(true);
-  };
+  },[editFirstName, editLastName, firstName, lastName, dispatch, setIsEditing, setstoreIsUpToDate])
 
 
   useEffect(() => {
-    if (
-      storeIsUpToDate &&
-      editFirstName === firstName &&
-      editLastName === lastName
-    ) {
+    if ( storeIsUpToDate && editFirstName === firstName && editLastName === lastName) {
       putProfile();
       setstoreIsUpToDate(false);
       setIsEditing(false);
@@ -69,28 +73,39 @@ const UserEditName = ({ setIsEditing }) => {
   ]);
 
 
-  const handleCancelEditName = () => {
+  const handleCancelEditName = useCallback(() => {
     setEditFirstName(firstName);
     setEditLastName(lastName);
     setIsEditing(false);
-  };
+  },[firstName, lastName, setIsEditing])
+
+
 
   return (
     <div className="edit_name_wrapper">
       <div className="edit_name_input_container">
         <input
+          id="editFirstName"
           type="text"
           className="edit_name_input"
-          onBlur={onBlurFirstName}
+          onBlur={isValidInput}
           placeholder={firstName}
         />
         <input
+          id="editLastName"
           type="text"
           className="edit_name_input"
-          onBlur={onBlurLastName}
+          onBlur={isValidInput}
           placeholder={lastName}
         />
       </div>
+
+      {regexError ? (
+        <div className="edit_name_regexerror">{regexError}</div>
+      ) : (
+        null
+      )}
+
       <div className="edit_name_button_container">
         <button className="edit_name_button" onClick={handleEditName}>
           Save

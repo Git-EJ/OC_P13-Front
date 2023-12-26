@@ -462,6 +462,11 @@ input[type=text] {
 .edit_name_button:first-child {
   margin-right: 1rem;
 }
+.edit_name_regexerror {
+  color: #FF0000;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
 
 .account_wrapper {
   display: flex;
