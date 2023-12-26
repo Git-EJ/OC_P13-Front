@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types'
 import Pencil from '../assets/svg/Pencil'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import Xmark from '../assets/svg/Xmark'
 
 
 const DropDown = ({ index, transaction, isOpenIndex }) => {
   
   const firstLetterUpperCase = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase().trim()
   }
 
   const [isEditingNotes, setIsEditingNotes] = useState(false)
@@ -16,7 +16,7 @@ const DropDown = ({ index, transaction, isOpenIndex }) => {
   const [temporaryCategoryValue, setTemporaryCategoryValue] = useState('')
   const [inputNotesValue, setInputNotesValue] = useState(firstLetterUpperCase(transaction.additionalDetails.notes))
   const [inputCategoryValue, setInputCategoryValue] = useState(firstLetterUpperCase(transaction.additionalDetails.category))
-  
+  const [regexError, setRegexError] = useState('');
 
   const clickPencil = (arg) => {
     if (arg === 'category') {
@@ -26,29 +26,72 @@ const DropDown = ({ index, transaction, isOpenIndex }) => {
     }
   }
   
-  // TODO : Regex and max length
+
   const clickChangeValue = (arg) => {
+
+    if (regexError) {
+      if (arg === 'category') {
+        setInputCategoryValue(inputCategoryValue)
+        setTemporaryCategoryValue('')
+      }
+      if (arg === 'notes') {
+        setInputNotesValue(inputNotesValue)
+        setTemporaryNotesValue('')
+      }
+      return
+      
+    } else {
+      setRegexError("");
+      
+      if (arg === 'category') {
+        setInputCategoryValue(temporaryCategoryValue)
+        setIsEditingCategory(!isEditingCategory)
+        setTemporaryCategoryValue('')
+
+      } else if (arg === 'notes') {
+        setInputNotesValue(temporaryNotesValue)
+        setIsEditingNotes(!isEditingNotes)
+        setTemporaryNotesValue('')
+      }
+    }
+  }
+
+  const clickCancel = (arg) => {
+    
+    setRegexError("");
+
     if (arg === 'category') {
-      setInputCategoryValue(temporaryCategoryValue)
+      setInputCategoryValue(inputCategoryValue)
       setIsEditingCategory(!isEditingCategory)
       setTemporaryCategoryValue('')
-    } else if (arg === 'notes') {
-      setInputNotesValue(temporaryNotesValue)
+    }
+    if (arg === 'notes') {
+      setInputNotesValue(inputNotesValue)
       setIsEditingNotes(!isEditingNotes)
       setTemporaryNotesValue('')
     }
   }
 
-  const clickCancel = (arg) => {
-    if (arg === 'category') {
-      setInputCategoryValue(inputCategoryValue)
-      setIsEditingCategory(!isEditingCategory)
+
+  const verfiyInput = useCallback((e) => {
+
+    const editPattern = /^[a-zA-Z0-9éèçùï_*,.!?;:()@&$€£%'"-]*$/;
+    if (!editPattern.test(e.target.value)) {
+      setRegexError("Caractère(s) non autorisé(s), autorisé(s): a-z A-Z 0-9 é è ç ù ï _ * , . ! ? ; : ( ) @ & $ € £ % ' \" -");
+    } else if(e.target.value.length > 30) {
+      setRegexError("Nombre de caractères maximum: 30");
+    } else {
+      setRegexError("");
+      if (isEditingCategory) {
+        setTemporaryCategoryValue(e.target.value)
+      }
+      if (isEditingNotes) {
+        setTemporaryNotesValue(e.target.value)
+      }
     }
-    if (arg === 'notes') {
-      setInputNotesValue(inputNotesValue)
-      setIsEditingNotes(!isEditingNotes)
-    }
-  }
+  },[isEditingCategory, isEditingNotes, setTemporaryCategoryValue, setTemporaryNotesValue, setRegexError])
+
+
 
   const details = [
     {
@@ -90,7 +133,7 @@ const DropDown = ({ index, transaction, isOpenIndex }) => {
                 {detail.isEditing && (
                   <input  type="text" 
                           className={`account_transaction_additional_details_${detail.label.toLowerCase()}_edit_input`} 
-                          onChange={(e) => detail.setTemporaryValue(e.target.value)}
+                          onBlur={verfiyInput}
                   />
                 )}
 
@@ -108,9 +151,16 @@ const DropDown = ({ index, transaction, isOpenIndex }) => {
               </div>
             </div>
           ))}
-
         </div>
       ) : null}
+
+
+      {regexError ? (
+        <div className="edit_name_regexerror">{regexError}</div>
+      ) : (
+        null
+      )}
+      
     </>
   )
 }

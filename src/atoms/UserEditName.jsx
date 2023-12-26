@@ -9,13 +9,12 @@ const UserEditName = ({ setIsEditing }) => {
  
   const dispatch = useDispatch();
   const { putProfile } = useUserProfile();
-  const remember = useSelector((state) => state.auth.remember);
   const firstName = useSelector((state) => (state.auth.userFirstName) || localStorage.getItem("userFirstName"));
   const lastName = useSelector((state) => (state.auth.userLastName) || localStorage.getItem("userLastName"));
   const [editFirstName, setEditFirstName] = useState("");
   const [editLastName, setEditLastName] = useState("");
   const [storeIsUpToDate, setstoreIsUpToDate] = useState(false);
-  const [regexError, setRegexError] = useState(false);
+  const [regexError, setRegexError] = useState('');
 
 
   const isValidInput = useCallback((e) => {

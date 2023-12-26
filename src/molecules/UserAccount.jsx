@@ -38,8 +38,6 @@ const UserAccount = () => {
 
 
   useEffect(() => {
-    console.log('firstName', firstName)
-    console.log('lastName', lastName)
     firstName && lastName ? setIsLoading(false) : setIsLoading(true);
   }, [firstName, lastName, setIsLoading]);
 
