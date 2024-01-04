@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import UserEditName from "../atoms/UserEditName";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsEditingUserName } from "../rtk/slices/authSlice";
 
 
 const title = "Argent Bank";
@@ -33,17 +34,19 @@ const UserAccount = () => {
   const firstName = useSelector((state) => state.auth.userFirstName) || localStorage.getItem("userFirstName");
   const lastName = useSelector((state) => state.auth.userLastName) || localStorage.getItem("userLastName");
   const [isLoading, setIsLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
+  const isEditingUserName = useSelector((state) => state.auth.isEditingUserName);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
     firstName && lastName ? setIsLoading(false) : setIsLoading(true);
-  }, [firstName, lastName, setIsLoading]);
+    console.log('iseEditingUserName', isEditingUserName)
+  }, [firstName, lastName, setIsLoading, isEditingUserName]);
 
 
   const handleEditName = () => {
-    setIsEditing(true);
+    dispatch(setIsEditingUserName(true));
   };
 
 
@@ -55,7 +58,7 @@ const UserAccount = () => {
   return (
     <main className="main bg-dark">
       <div className="header">
-        {!isEditing ? (
+        {!isEditingUserName ? (
           <>
             <h1 className="welcome_text">
               Welcome back
@@ -70,7 +73,7 @@ const UserAccount = () => {
           <h1 className="welcome_text">
             Welcome back
             <br />
-            <UserEditName setIsEditing={setIsEditing} />
+            <UserEditName />
           </h1>
         )}
       </div>

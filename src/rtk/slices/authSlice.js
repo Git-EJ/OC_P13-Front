@@ -11,6 +11,9 @@ const authSlice = createSlice({
     token: localStorage.getItem("token") || null,
     isAuth: !!localStorage.getItem("isAuth"),
     remember: !!localStorage.getItem("remember"),
+    userFirstName: localStorage.getItem("userFirstName") || null,
+    userLastName: localStorage.getItem("userLastName") || null,
+    isEditingUserName: false,
   },
   reducers: {
     setRemember(state, action) {
@@ -40,12 +43,17 @@ const authSlice = createSlice({
         localStorage.setItem("userLastName", state.userLastName)
       }
     },
+
+    setIsEditingUserName(state, action) {
+      state.isEditingUserName = action.payload ? true : false
+    },
  
     clearToken(state) {
       state.token = null
-      state.setUserFirstName = null
-      state.setUserLastName = null
+      state.userFirstName = null
+      state.userLastName = null
       state.isAuth = false
+      state.isEditingUserName = false
       localStorage.removeItem("token")
       localStorage.removeItem("isAuth")
       localStorage.removeItem("userFirstName")
@@ -61,6 +69,6 @@ const authSlice = createSlice({
 
 
 
-export const { setRemember, setUserFirstName, setUserLastName, setToken, clearToken, clearRemember } = authSlice.actions;
+export const { setRemember, setUserFirstName, setUserLastName, setToken, setIsEditingUserName, clearToken, clearRemember } = authSlice.actions;
 export default authSlice.reducer;
 

@@ -1,25 +1,25 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import { setUserFirstName, setUserLastName } from "../rtk/slices/authSlice";
 import useUserProfile from "../api/Profile";
+import { setIsEditingUserName } from "../rtk/slices/authSlice";
 
 
-const UserEditName = ({ setIsEditing }) => {
- 
+const UserEditName = () => {
+
   const dispatch = useDispatch();
   const { putProfile } = useUserProfile();
-  const firstName = useSelector((state) => (state.auth.userFirstName) || localStorage.getItem("userFirstName"));
-  const lastName = useSelector((state) => (state.auth.userLastName) || localStorage.getItem("userLastName"));
+  const firstName = useSelector((state) => (state.auth.userFirstName));
+  const lastName = useSelector((state) => (state.auth.userLastName));
   const [editFirstName, setEditFirstName] = useState("");
   const [editLastName, setEditLastName] = useState("");
-  const [storeIsUpToDate, setstoreIsUpToDate] = useState(false);
+  const [storeIsUpToDate, setStoreIsUpToDate] = useState(false);
   const [regexError, setRegexError] = useState('');
 
 
-  const isValidInput = useCallback((e) => {
+  const isValidInput = (e) => {
 
-    const editNamePattern = /^[a-zA-Z éèçùï-]+$/;
+    const editNamePattern = /^[a-zA-Z éèçùï-]*$/;
 
     if (!editNamePattern.test(e.target.value)) {
       setRegexError("Caractère(s) non autorisé(s), autorisé(s): a-z A-Z é è ç ù ï");
@@ -28,7 +28,7 @@ const UserEditName = ({ setIsEditing }) => {
       setRegexError("Nombre de caractères maximum: 30");
 
     } else {
-      setRegexError("");
+      setRegexError(false);
 
       if(e.target.id === "editFirstName"){
         setEditFirstName(e.target.value);
@@ -36,29 +36,43 @@ const UserEditName = ({ setIsEditing }) => {
         setEditLastName(e.target.value);
       }
     }
-  },[setRegexError, setEditFirstName, setEditLastName]);
+  }
+  
 
+  const handleEditName = () => {
 
-  const handleEditName = useCallback (() => {
-    
-    editFirstName === ""
-      ? setEditFirstName(firstName)
-      : dispatch(setUserFirstName(editFirstName));
+    if (!regexError) {
+      
+      editFirstName === "" ? setEditFirstName(firstName) : dispatch(setUserFirstName(editFirstName));
+      console.log("editFirstName 1: ", editFirstName);
+      
+      editLastName === "" ? setEditLastName(lastName) : dispatch(setUserLastName(editLastName));
+      console.log("editLastName 1: ", editLastName);
+      
+      if(editFirstName === firstName && editLastName === lastName) {
+        dispatch(setIsEditingUserName(false));
+      }
+      
+      setStoreIsUpToDate(true);
+    }
+  }
+  
 
-    editLastName === ""
-      ? setEditLastName(lastName)
-      : dispatch(setUserLastName(editLastName));
-
-    setIsEditing(false);
-    setstoreIsUpToDate(true);
-  },[editFirstName, editLastName, firstName, lastName, dispatch, setIsEditing, setstoreIsUpToDate])
-
+  const handleCancelEditName = () => {
+    setEditFirstName(firstName);
+    setEditLastName(lastName);
+    dispatch(setIsEditingUserName(false));
+    setRegexError("");
+  }
+  
 
   useEffect(() => {
-    if ( storeIsUpToDate && editFirstName === firstName && editLastName === lastName) {
+
+    if (storeIsUpToDate) {
+      
       putProfile();
-      setstoreIsUpToDate(false);
-      setIsEditing(false);
+      setStoreIsUpToDate(false);
+      dispatch(setIsEditingUserName(false));
     }
   }, [
     editFirstName,
@@ -67,17 +81,9 @@ const UserEditName = ({ setIsEditing }) => {
     lastName,
     storeIsUpToDate,
     putProfile,
-    setstoreIsUpToDate,
-    setIsEditing,
+    setStoreIsUpToDate,
+    dispatch,
   ]);
-
-
-  const handleCancelEditName = useCallback(() => {
-    setEditFirstName(firstName);
-    setEditLastName(lastName);
-    setIsEditing(false);
-  },[firstName, lastName, setIsEditing])
-
 
 
   return (
@@ -87,14 +93,14 @@ const UserEditName = ({ setIsEditing }) => {
           id="editFirstName"
           type="text"
           className="edit_name_input"
-          onBlur={isValidInput}
+          onChange={isValidInput}
           placeholder={firstName}
         />
         <input
           id="editLastName"
           type="text"
           className="edit_name_input"
-          onBlur={isValidInput}
+          onChange={isValidInput}
           placeholder={lastName}
         />
       </div>
@@ -117,8 +123,5 @@ const UserEditName = ({ setIsEditing }) => {
   );
 };
 
-UserEditName.propTypes = {
-  setIsEditing: PropTypes.func.isRequired,
-};
 
 export default UserEditName;

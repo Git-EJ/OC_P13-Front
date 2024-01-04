@@ -9,14 +9,13 @@ const useUserProfile = () => {
   const HOST = "http://localhost:3001/api/v1/user/";
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const token = useSelector((state) => state.auth.token);
   const putFirstName = useSelector((state) => state.auth.userFirstName);
   const putLastName = useSelector((state) => state.auth.userLastName);
 
-  const navigate = useNavigate();
-
-
+  
   const postProfile = useCallback(async () => {
     try {
       const postProfileResponse = await axios.post( HOST + "profile", {}, {
@@ -41,13 +40,13 @@ const useUserProfile = () => {
           },
         },
       });
-      console.log("%c Erreur useUserProfile/postProfile: ", "color:red", err);
+      console.log("%c Erreur useUserProfile/postProfile: {%s}", "color:red", err);
     }
   }, [dispatch, token, navigate]);
 
 
-
   const putProfile = useCallback(async () => {
+
     try {
       const requestBody = {
         firstName: putFirstName,
@@ -59,7 +58,7 @@ const useUserProfile = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      
     } catch (err) {
       
       navigate(`/error/${err.response.status}`, {
