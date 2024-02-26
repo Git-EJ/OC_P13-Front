@@ -3,12 +3,13 @@
 <div align='center'>
 
  <img src="/public/assets/ARGENT_BANK.png" alt="Argent bank Logo" />
- 
+
 </div>
+<br><br>
 
 App for bank, manage accounts and transactions. User identifications with JWT token. DatatBase/mongoDB
 
-<strong>Back end at:</strong> https://github.com/Git-EJ/OC_P13-Back
+<strong>Back end at:</strong> https://github.com/Git-EJ/OC_P13-Back<br>
 
 
 ![React Badge](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=000&style=flat)
