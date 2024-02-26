@@ -1,6 +1,6 @@
 <h1>OC_P13</h1>
 
-<h2>Argent Bank</h2>
+![Argent Bank](/public/assets/ARGENT_BANK.png)
 
 App for bank, manage accounts and transactions. User identifications with JWT token. DatatBase/mongoDB
 
