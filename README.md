@@ -74,3 +74,13 @@ npm run preview
 - Last Name: `Rogers`,
 - Email: `steve@rogers.com`,
 - Password: `password456`
+
+<br>
+
+<strong>Screenshot:</strong>
+
+<div align='center'>
+
+ <img src="./src/assets/screenshot/screenshot_argentBank-transactionsPage.png" alt="Argent Bank transactions page screenshot" title="Argent Bank transactions page screenshot" width="auto" height="auto"/>
+ 
+</div>
